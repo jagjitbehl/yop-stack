@@ -48,6 +48,27 @@ a,.btn,button,input[type="submit"]{
   color: $primary-color !important;
 }
 
+.text-secondary{
+  color: $secondary-color !important;
+}
+
+.label-medium{
+  @include font-size(0.69);
+}
+img{
+  max-width: 100%;
+}
+.inputIcon{
+  position: relative;
+  img{
+    @include position(absolute, $top:10px, $left:10px);
+    width: 20px;
+  }
+  input{
+    padding-left: 35px;
+  }
+}
+
 .mainWrap{
   display: grid;
   grid-template-columns: 1fr;
@@ -61,6 +82,8 @@ a,.btn,button,input[type="submit"]{
   .pBottImg{
     @include position(absolute, $bottom:0, $right:0);
     z-index: -1;
+    max-height: 100vh;
+    @include rotate(180);
   }
 }
 
@@ -69,13 +92,19 @@ a,.btn,button,input[type="submit"]{
   display: flex;
   align-items: center;
   padding: 1rem 0;  
-
+  @media (max-with: 767px) {
+    margin-bottom: 1.5rem;
+  }
   .logoWrap{
     img{
       max-width: 95px;
     }
+    
   }
   .nav{
+    @media screen and (max-with: 767px) {
+      display: none;
+    }
     margin-left: auto;
     .nav-link{
       @include font-size(0.82);
@@ -107,7 +136,7 @@ a,.btn,button,input[type="submit"]{
 }
 .gBox{
   padding: 0.5rem;
-  background-color: $ligtGrey;
+  background-color: $midGrey;
   @include border-radius(10px);
   &--width{
     margin-left: auto;
@@ -125,10 +154,71 @@ a,.btn,button,input[type="submit"]{
     }
     .ypTags{
       min-width: 115px;
+      @media only screen and (max-with: 767px) {
+        min-width: 0;
+        @include font-size(0.625);
+      }
     }
   }
   .ypTags--outline-primary{
     min-width: 108px;
     margin-bottom: 1.5rem;
+  }
+}
+
+.ypdIcon{
+  width: 20px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
+//White Box
+.ypBox{
+  background-color: #fff;
+  padding: 1.5rem;
+  @include border-radius(10px);
+  @include box-shadow($left:0px, $top:10px, $blur:10px, $color:rgba(0,0,0,0.05));
+  &__head{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    &--border{
+      border-bottom: 1px solid darken($midGrey, 3%);
+      padding-bottom: 0.5rem;
+    }
+    .ypHeadRight{
+      justify-self: flex-end;
+    }
+    h3{
+     @include font-size(1);
+    }
+  }
+  &__block{
+    margin-top:1.3rem;
+    margin-bottom:1.3rem;
+    &--border{
+      border-bottom: 1px solid darken($midGrey, 3%);
+    }
+  }
+}
+
+.cValue{
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  @include border-radius(50%);
+  line-height: 30px;
+  text-align: center;
+  &-light{
+    background-color: $midGrey;
+  }
+  &+.cValue{
+    margin-left: 1rem;
+  }
+}
+
+.graph{
+  img{
+    max-width: 130px;
   }
 }

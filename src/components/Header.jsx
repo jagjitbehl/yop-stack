@@ -21,7 +21,7 @@ class Header extends Component{
                     <img src={logo} alt="Yop" />
                   </a>
                 </div>
-                <Nav>
+                <Nav className="d-md-flex d-none">
                   <NavItem>
                     <NavLink href="#">yPlatform</NavLink>
                   </NavItem>

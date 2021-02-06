@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import Header from './components/Header';
 import Stake from './pages/Stake';
 import './App.scss';
 import pTopImg from './assets/images/dot-bg-white-upper-left.png';
-import pBottImg from './assets/images/dota-bg-white-lower-right.png';
+import StakeToken from './pages/StakeToken';
 
 class App extends Component{
   constructor(props) {
@@ -15,9 +21,16 @@ class App extends Component{
     return (
       <div className="mainWrap">
         <Header />
-        <Stake />
         <img className="pTopImg" src={pTopImg} alt="Top Image" />
-        <img className="pBottImg" src={pBottImg} alt="Bottom Image" />
+        <img className="pBottImg" src={pTopImg} alt="Bottom Image" />
+        <Router>
+          <Route exact path="/">
+            <Stake />
+          </Route>
+          <Route exact path="/token">
+            <StakeToken />
+          </Route>
+        </Router>
       </div>
     )
   }

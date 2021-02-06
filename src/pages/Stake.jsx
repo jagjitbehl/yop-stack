@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import { Link } from "react-router-dom";
 import {
   Container, Row, Col, Button,
 } from 'reactstrap';
@@ -10,7 +11,7 @@ class Stake extends Component{
   }
   render() {
     return(
-      <section className="innerSec stakeSec">
+      <section className="innerSec stakeSec pt-md-0 pt-5">
         <Container>
           <Row>
             <Col md="6" xs="12">
@@ -19,9 +20,9 @@ class Stake extends Component{
                   <h2 className="text-primary">Staking Now Live!</h2>
                   <p>Some pretty words here?</p>
                 </div>
-                <div className="btnWrap">
+                <div className="btnWrap mb-md-0 mb-4">
                   <span className="ypTags ypTags--outline-primary">Yop/Eth</span><br />
-                  <Button color="primary">Unlock Wallet</Button>
+                  <Link to="/token" className="btn btn-primary">Unlock Wallet</Link>
                 </div>
               </div>
             </Col>
@@ -32,16 +33,16 @@ class Stake extends Component{
                   <p>Other Multi Asset and Liquidity Pool Staking</p>
                 </div>
                 <Row>
-                  <Col md="6" xs="12" className="text-md-right text-center pb-4">
+                  <Col md="6" xs="6" className="text-md-right text-center pb-4">
                     <span className="ypTags">YOP / SUSHI</span>
                   </Col>
-                  <Col md="6" xs="12" className="text-md-left text-center pb-4">
+                  <Col md="6" xs="6" className="text-md-left text-center pb-4">
                     <span className="ypTags">YOP / ETH LP</span>
                   </Col>
-                  <Col md="6" xs="12" className="text-md-right text-center pb-md-0 pb-4">
+                  <Col md="6" xs="6" className="text-md-right text-center pb-md-0 pb-4">
                     <span className="ypTags">YOP / COMP</span>
                   </Col>
-                  <Col md="6" xs="12" className="text-md-left text-center pb-0">
+                  <Col md="6" xs="6" className="text-md-left text-center pb-0">
                     <span className="ypTags">YOP / USDC LP</span>
                   </Col>
                 </Row>
