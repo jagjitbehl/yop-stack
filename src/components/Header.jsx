@@ -32,6 +32,9 @@ class Header extends Component{
                     <NavLink href="#">$YOP Token</NavLink>
                   </NavItem>
                   <NavItem>
+                    <NavLink active href="#">Stake</NavLink>
+                  </NavItem>
+                  <NavItem>
                     <NavLink href="#">Media</NavLink>
                   </NavItem>
                   <NavItem>

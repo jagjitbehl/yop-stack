@@ -7,17 +7,17 @@
 
 html,body,#root,.mainWrap{
   min-height:100vh;
-  background-color: $ligtGrey;
 }
 
 body,p{
-  font-size: 16px;
+  @include font-size(0.87);
   color: #444;
   font-family: $primary-font;
 }
 
 h1,h2,h3,h4,h5,h6{
-  font-family: $primary-font;
+  font-family: $secondary-font;
+  font-weight: 600;
 }
 
 h1{
@@ -41,6 +41,11 @@ h6{
 
 a,.btn,button,input[type="submit"]{
   @include transition(all ease 350ms);
+  font-family: $primary-font;
+}
+
+.text-primary{
+  color: $primary-color !important;
 }
 
 .mainWrap{
@@ -48,13 +53,23 @@ a,.btn,button,input[type="submit"]{
   grid-template-columns: 1fr;
   grid-template-rows: 70px 1fr;
   min-height: 100vh;
+  .pTopImg{
+    @include position(absolute, $top:0, $left:0);
+    z-index: -1;
+    max-height: 100vh;
+  }
+  .pBottImg{
+    @include position(absolute, $bottom:0, $right:0);
+    z-index: -1;
+  }
 }
 
 // header
 .menuwrap{
   display: flex;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1rem 0;  
+
   .logoWrap{
     img{
       max-width: 95px;
@@ -63,8 +78,10 @@ a,.btn,button,input[type="submit"]{
   .nav{
     margin-left: auto;
     .nav-link{
-      @include font-size(0.95);
+      @include font-size(0.82);
+      font-weight: 600;
       color: #444;
+      &.active,
       &:hover{
         color: $primary-color;
       }
@@ -72,18 +89,46 @@ a,.btn,button,input[type="submit"]{
   }
 }
 
-.innerSec{
-  .container{
-    display: flex;
-    align-items: center;
-    height: 100%;
+.ypHead{
+  h2{
+    @include font-size(1.25);
   }
+}
+
+.innerSec{
+  display: flex;
+  align-items: center;
   .btnWrap{
-    text-align: center;
-    width: 100%;
     .btn{
       width:100%;
       max-width: 300px;
     }
+  }
+}
+.gBox{
+  padding: 0.5rem;
+  background-color: $ligtGrey;
+  @include border-radius(10px);
+  &--width{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &--padding{
+    padding: 30px;
+  }
+}
+
+.stakeSec{
+  .gBox{
+    &--width{
+      max-width: 400px;
+    }
+    .ypTags{
+      min-width: 115px;
+    }
+  }
+  .ypTags--outline-primary{
+    min-width: 108px;
+    margin-bottom: 1.5rem;
   }
 }
