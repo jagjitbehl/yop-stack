@@ -1,0 +1,19 @@
+.btn{
+  padding: 0.8rem 1rem;
+  @include border-radius(15px);
+  font-family: $primary-font;
+  display: inline-block;
+  font-weight: 600;
+
+  &-primary{
+    background-color: $primary-color;
+    border-color: $primary-color;
+    &:not(:disabled):not(:disabled):active,
+    &:hover,
+    &:focus,
+    &:active{
+      background-color: darken($primary-color, 10%);
+      border-color: darken($primary-color, 10%);
+    }
+  }
+}
