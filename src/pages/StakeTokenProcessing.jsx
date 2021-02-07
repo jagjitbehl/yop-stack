@@ -12,7 +12,7 @@ import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 
-class StakeToken extends Component{
+class StakeTokenProcess extends Component{
   constructor(props) {
     super(props);
     this.state = '';
@@ -97,8 +97,15 @@ class StakeToken extends Component{
                     </Row>
                   </div>
                   <div className="ypBox__bottom text-center">
-                    <a href="/process"className="btn btn-primary btn-mw300">STAKE</a>
+                    <Button color="secondary" disabled className="btn-mw300">STAKE</Button>
                   </div>
+                </div>
+                <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
+                  <div className="ypInnner flex-row">
+                    <img className="mb-4" src={Icon5} />
+                    <h4 className="text-white font-weight-normal"><strong>1,234.12345678</strong> $YOP<br />Staking in Progress</h4>
+                  </div>
+                  <a href="#" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
                 </div>
               </div>
             </Col>
@@ -136,4 +143,4 @@ class StakeToken extends Component{
   }
 }
 
-export default StakeToken;
+export default StakeTokenProcess;

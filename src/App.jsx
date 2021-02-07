@@ -10,6 +10,7 @@ import Stake from './pages/Stake';
 import './App.scss';
 import pTopImg from './assets/images/dot-bg-white-upper-left.png';
 import StakeToken from './pages/StakeToken';
+import StakeTokenProcessing from './pages/StakeTokenProcessing';
 
 class App extends Component{
   constructor(props) {
@@ -29,6 +30,9 @@ class App extends Component{
           </Route>
           <Route exact path="/token">
             <StakeToken />
+          </Route>
+          <Route exact path="/process">
+            <StakeTokenProcessing />
           </Route>
         </Router>
       </div>
