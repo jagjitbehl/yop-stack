@@ -105,8 +105,8 @@ function Stake() {
           setTxHash(null);
         });
     } else {
-      if (!stakeAmount || stakeAmount < 88.0) {
-        NotificationManager.warning('Minium amount is 88 YOP');
+      if (!stakeAmount || stakeAmount <= 0) {
+        NotificationManager.warning('Please enter amount to stake');
         return;
       }
       const approveAmount = new BigNumber(stakeAmount).times(1e8);
