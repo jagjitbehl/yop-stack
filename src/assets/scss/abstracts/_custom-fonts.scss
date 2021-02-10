@@ -1,48 +1,77 @@
 @font-face {
   font-family: 'Circular Std';
-  src: url('../../font/CircularStd-Black.woff2') format('woff2'),
-      url('../../font/CircularStd-Black.woff') format('woff');
+  src: url('../../fonts/CircularStd-Black.eot');
+  src: url('../../fonts/CircularStd-Black.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/CircularStd-Black.woff2') format('woff2'),
+      url('../../fonts/CircularStd-Black.woff') format('woff'),
+      url('../../fonts/CircularStd-Black.ttf') format('truetype'),
+      url('../../fonts/CircularStd-Black.svg#CircularStd-Black') format('svg');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Metropolis';
-  src: url('../../font/smetropolis-bold-webfont.woff2') format('woff2'),
-       url('../../fonts/metropolis-bold-webfont.woff') format('woff');
-  font-weight: bold;
+  font-family: 'Metropolis Extra';
+  src: url('../../fonts/Metropolis-ExtraBold.eot');
+  src: url('../../fonts/Metropolis-ExtraBold.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/Metropolis-ExtraBold.woff2') format('woff2'),
+      url('../../fonts/Metropolis-ExtraBold.woff') format('woff'),
+      url('../../fonts/Metropolis-ExtraBold.ttf') format('truetype'),
+      url('../../fonts/Metropolis-ExtraBold.svg#Metropolis-ExtraBold') format('svg');
+  font-weight: 800;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Metropolis';
-  src: url('../../fonts/metropolis-extrabold-webfont.woff2') format('woff2'),
-        url('../../fonts/metropolis-extrabold-webfont.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('../../fonts/metropolis-light-webfont.woff2') format('woff2'),
-        url('../../fonts/metropolis-light-webfont.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('../../fonts/metropolis-medium-webfont.woff2') format('woff2'),
-        url('../../fonts/metropolis-medium-webfont.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('../../fonts/metropolis-regular-webfont.woff2') format('woff2'),
-        url('../../fonts/metropolis-regular-webfont.woff') format('woff');
+  src: url('../../fonts/Metropolis-Regular.eot');
+  src: url('../../fonts/Metropolis-Regular.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/Metropolis-Regular.woff2') format('woff2'),
+      url('../../fonts/Metropolis-Regular.woff') format('woff'),
+      url('../../fonts/Metropolis-Regular.ttf') format('truetype'),
+      url('../../fonts/Metropolis-Regular.svg#Metropolis-Regular') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../../fonts/Metropolis-Bold.eot');
+  src: url('../../fonts/Metropolis-Bold.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/Metropolis-Bold.woff2') format('woff2'),
+      url('../../fonts/Metropolis-Bold.woff') format('woff'),
+      url('../../fonts/Metropolis-Bold.ttf') format('truetype'),
+      url('../../fonts/Metropolis-Bold.svg#Metropolis-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../../fonts/Metropolis-Medium.eot');
+  src: url('../../fonts/Metropolis-Medium.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/Metropolis-Medium.woff2') format('woff2'),
+      url('../../fonts/Metropolis-Medium.woff') format('woff'),
+      url('../../fonts/Metropolis-Medium.ttf') format('truetype'),
+      url('../../fonts/Metropolis-Medium.svg#Metropolis-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../../fonts/Metropolis-Light.eot');
+  src: url('../../fonts/Metropolis-Light.eot?#iefix') format('embedded-opentype'),
+      url('../../fonts/Metropolis-Light.woff2') format('woff2'),
+      url('../../fonts/Metropolis-Light.woff') format('woff'),
+      url('../../fonts/Metropolis-Light.ttf') format('truetype'),
+      url('../../fonts/Metropolis-Light.svg#Metropolis-Light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }

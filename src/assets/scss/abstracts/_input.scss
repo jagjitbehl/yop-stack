@@ -2,6 +2,7 @@
   padding: 0.5rem 1rem;
   background-color: $midGrey;
   @include font-size(0.9);
+  border-color: $border-color;
   &:focus{
     background-color: $midGrey;
     box-shadow: none;

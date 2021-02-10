@@ -21,7 +21,7 @@ class Stake extends Component{
                   <p>Some pretty words here?</p>
                 </div>
                 <div className="btnWrap mb-md-0 mb-4">
-                  <span className="ypTags ypTags--outline-primary">Yop/Eth</span><br />
+                  <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
                   <Link to="/token" className="btn btn-primary">Unlock Wallet</Link>
                 </div>
               </div>

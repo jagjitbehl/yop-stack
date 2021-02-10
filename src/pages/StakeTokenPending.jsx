@@ -11,7 +11,7 @@ import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 
-class StakeToken extends Component{
+class StakeTokenPending extends Component{
   constructor(props) {
     super(props);
     this.state = '';
@@ -28,15 +28,13 @@ class StakeToken extends Component{
                   <div className="ypHeading">
                     <h3><img className="ypdIcon" src={Icon5} /> Stake Token</h3>
                   </div>
-                  <div className="ypHeadRight">
-                    <span className="text-muted label-small">Available $YOP Balance <span className="pl-1 text-secondary">750,000.00</span></span>
-                  </div>
+                  <div className="ypHeadRight" />
                 </div>
                 <div className="ypBox__content">
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon1} /> <span class="label-medium font-weight-medium">Stake Amount</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon1} /> <span class="label-medium font-weight-medium">Stake Amount</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight ypRight--icon d-flex align-items-center">
@@ -52,7 +50,7 @@ class StakeToken extends Component{
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon2} /> <span class="label-medium font-weight-medium">Stake Period </span><span className="small">(Days)</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon2} /> <span class="label-medium font-weight-medium">Stake Period </span><span className="small">(Days)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -66,7 +64,7 @@ class StakeToken extends Component{
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon3} /> <span class="label-medium font-weight-medium">Reward</span> <span className="small">(Potential earning at the end of stake period)</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> <span class="label-medium font-weight-medium">Reward</span> <span className="small">(Potential earning at the end of stake period)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -98,6 +96,12 @@ class StakeToken extends Component{
                   <div className="ypBox__bottom text-center">
                     <a href="/process"className="btn btn-primary btn-mw300">STAKE</a>
                   </div>
+                </div>
+                <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
+                  <div className="ypInnner flex-row">
+                    <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
+                  </div>
+                  <a href="/processbar" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
                 </div>
               </div>
             </Col>
@@ -135,4 +139,4 @@ class StakeToken extends Component{
   }
 }
 
-export default StakeToken;
+export default StakeTokenPending;
