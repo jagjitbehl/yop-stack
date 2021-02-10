@@ -75,7 +75,7 @@ function Stake() {
         dispatch(setNetworkId(netId));
         dispatch(setAddress(accounts[0]));
         dispatch(setConnectType('metamask'));
-        history.push('/token');
+        // history.push('/token');
       }
     } catch (error) {
       NotificationManager.warning('Something went wrong while connect wallet');
@@ -145,7 +145,7 @@ function Stake() {
                   <p>Some pretty words here?</p>
                 </div>
                 <div className="btnWrap mb-md-0 mb-4">
-                  <span className="ypTags ypTags--outline-primary">Yop/Eth</span><br />
+                  <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
                   {/* <Link to="/token" className="btn btn-primary">Unlock Wallet</Link> */}
                   <button className="btn btn-primary" onClick={e => onMetamaskConnect()}>Unlock Wallet</button>
                 </div>
@@ -270,10 +270,9 @@ function Stake() {
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <img className="mb-4" src={Icon5} />
-                    <h4 className="text-white font-weight-normal"><strong>{stakeAmount}</strong> $YOP<br />Staking in Progress</h4>
+                    <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
                   </div>
-                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
+                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}
             </div>
           </Col>

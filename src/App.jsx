@@ -15,6 +15,10 @@ import './App.scss';
 import pTopImg from './assets/images/dot-bg-white-upper-left.png';
 import StakeToken from './pages/StakeToken';
 import StakeTokenProcessing from './pages/StakeTokenProcessing';
+import StakeTokenPending from './pages/StakeTokenPending';
+import StakeBar from './pages/StakeBar';
+import StakeBarActive from './pages/StakeBarActive';
+import StakeBarResult from './pages/StakeBarResult';
 
 import { providerUrl, Web3, connector } from "./yop/web3";
 
@@ -109,6 +113,18 @@ class App extends Component {
           <Route exact path="/process">
             <StakeTokenProcessing />
           </Route> */}
+          <Route exact path="/processpending">
+            <StakeTokenPending />
+          </Route>
+          <Route exact path="/processbar">
+            <StakeBar />
+          </Route>
+          <Route exact path="/processbaractive">
+            <StakeBarActive />
+          </Route>
+          <Route exact path="/processresult">
+            <StakeBarResult />
+          </Route>
         </Router>
         <NotificationContainer />
       </div>

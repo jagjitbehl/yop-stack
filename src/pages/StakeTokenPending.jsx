@@ -7,12 +7,11 @@ import Icon1 from '../assets/images/1.png';
 import Icon2 from '../assets/images/2.png';
 import Icon3 from '../assets/images/3.png';
 import Icon5 from '../assets/images/5.png';
-import Icon5White from '../assets/images/5-white.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 
-class StakeTokenProcess extends Component{
+class StakeTokenPending extends Component{
   constructor(props) {
     super(props);
     this.state = '';
@@ -22,7 +21,7 @@ class StakeTokenProcess extends Component{
       <section className="innerSec stakeSec pt-md-0 pt-5">
         <Container>
           <Row className="align-items-stretch">
-          <Col md="9" xs="12">
+            <Col md="9" xs="12">
               <div className="ypBox">
                 <div className="ypBox__head ypBox__head--border text-center">
                   <div className="ypHeadLeft" />
@@ -100,10 +99,9 @@ class StakeTokenProcess extends Component{
                 </div>
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <img className="mb-4" src={Icon5White} />
-                    <h4 className="text-white font-weight-normal mt-2"><strong className="pr-1">1,234.12345678</strong> $YOP<br />Staking in Progress</h4>
+                    <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
                   </div>
-                  <a href="/processpending" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
+                  <a href="/processbar" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
                 </div>
               </div>
             </Col>
@@ -141,4 +139,4 @@ class StakeTokenProcess extends Component{
   }
 }
 
-export default StakeTokenProcess;
+export default StakeTokenPending;

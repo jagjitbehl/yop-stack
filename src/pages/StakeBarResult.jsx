@@ -7,12 +7,12 @@ import Icon1 from '../assets/images/1.png';
 import Icon2 from '../assets/images/2.png';
 import Icon3 from '../assets/images/3.png';
 import Icon5 from '../assets/images/5.png';
-import Icon5White from '../assets/images/5-white.png';
+import IconLock from '../assets/images/lockIcon.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 
-class StakeTokenProcess extends Component{
+class StakeBarResult extends Component{
   constructor(props) {
     super(props);
     this.state = '';
@@ -22,20 +22,22 @@ class StakeTokenProcess extends Component{
       <section className="innerSec stakeSec pt-md-0 pt-5">
         <Container>
           <Row className="align-items-stretch">
-          <Col md="9" xs="12">
+            <Col md="9" xs="12">
               <div className="ypBox">
                 <div className="ypBox__head ypBox__head--border text-center">
                   <div className="ypHeadLeft" />
                   <div className="ypHeading">
                     <h3><img className="ypdIcon" src={Icon5} /> Stake Token</h3>
                   </div>
-                  <div className="ypHeadRight" />
+                  <div className="ypHeadRight">
+                    <span className="text-muted label-medium">Available $YOP Balance <span className="pl-1 text-secondary">750,000.00</span></span>
+                  </div>
                 </div>
                 <div className="ypBox__content">
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft"><img className="ypdIcon" src={Icon1} /> <span class="label-medium font-weight-medium">Stake Amount</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon1} /> Stake Amount</div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight ypRight--icon d-flex align-items-center">
@@ -43,7 +45,7 @@ class StakeTokenProcess extends Component{
                             <img src={inpuIcon} alt="" />
                             <Input type="text" />
                           </div>
-                          <span className="text-primary label-small font-weight-bold pl-3">MAX</span>
+                          <span className="text-primary label-medium font-weight-bold pl-3">MAX</span>
                         </div>
                       </Col>
                     </Row>
@@ -51,7 +53,7 @@ class StakeTokenProcess extends Component{
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft"><img className="ypdIcon" src={Icon2} /> <span class="label-medium font-weight-medium">Stake Period </span><span className="small">(Days)</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon2} /> Stake Period <span className="small">(Days)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -65,7 +67,7 @@ class StakeTokenProcess extends Component{
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> <span class="label-medium font-weight-medium">Reward</span> <span className="small">(Potential earning at the end of stake period)</span></div>
+                        <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> Reward <span className="small">(Potential earning at the end of stake period)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -95,15 +97,15 @@ class StakeTokenProcess extends Component{
                     </Row>
                   </div>
                   <div className="ypBox__bottom text-center">
-                    <a href="/process"className="btn btn-primary btn-mw300">STAKE</a>
+                    <Button color="secondary" disabled className="btn-mw300">STAKE</Button>
                   </div>
                 </div>
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <img className="mb-4" src={Icon5White} />
-                    <h4 className="text-white font-weight-normal mt-2"><strong className="pr-1">1,234.12345678</strong> $YOP<br />Staking in Progress</h4>
+                    <img className="mb-5" src={IconLock} />
+                    <h4 className="text-white font-weight-normal"><span><strong>1,234.12345678</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>5000</strong> $YOP Earned</span></h4>
                   </div>
-                  <a href="/processpending" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
+                  <a href="/" className="pb-5 text-white text-underline"><u>View Transaction on Etherscan</u></a>
                 </div>
               </div>
             </Col>
@@ -141,4 +143,4 @@ class StakeTokenProcess extends Component{
   }
 }
 
-export default StakeTokenProcess;
+export default StakeBarResult;
