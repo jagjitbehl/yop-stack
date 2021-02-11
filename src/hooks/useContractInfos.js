@@ -7,9 +7,9 @@ export default function useContractInfos() {
 
     useEffect(() => {
         Promise.all([stakingContract.contract.methods.TVL().call(),
-            stakingContract.contract.methods.RewardsOwed().call(),
-            stakingContract.contract.methods.RewardPool().call(),
-            stakingContract.contract.methods.AllTimeStaked().call()]).then(([tvl,RewardsOwed,RewardPool,AllTimeStaked]) => {
+        stakingContract.contract.methods.RewardsOwed().call(),
+        stakingContract.contract.methods.RewardPool().call(),
+        stakingContract.contract.methods.AllTimeStaked().call()]).then(([tvl, RewardsOwed, RewardPool, AllTimeStaked]) => {
             setContractInfos({
                 tvl: new BigNumber(tvl),
                 rewardsOwed: new BigNumber(RewardsOwed),
