@@ -22,6 +22,7 @@ import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
+import useContractInfos from '../hooks/useContractInfos'
 
 function Stake() {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ function Stake() {
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
+
+
+  // TODO use me to show contract information on the side
+  const contractInfos = useContractInfos();
 
   useEffect(() => {
     async function getStatus() {
