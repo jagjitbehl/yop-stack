@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import {
   Container, Row, Col, Button, Input
 } from 'reactstrap';
@@ -11,13 +11,13 @@ import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 
-class StakeToken extends Component{
+class StakeToken extends Component {
   constructor(props) {
     super(props);
     this.state = '';
   }
   render() {
-    return(
+    return (
       <section className="innerSec stakeSec pt-md-0 pt-5">
         <Container>
           <Row className="align-items-stretch">
@@ -85,50 +85,50 @@ class StakeToken extends Component{
                               <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
                             </label>
                           </div>
-                          </div>
+                        </div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
                           <h5><span className="pr-1 font-weight-normal small">View Contract on Etherscan</span>
-                          <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
+                            <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
                         </div>
                       </Col>
                     </Row>
                   </div>
                   <div className="ypBox__bottom text-center">
-                    <a href="/process"className="btn btn-primary btn-mw300">STAKE</a>
+                    <a href="/process" className="btn btn-primary btn-mw300">STAKE</a>
                   </div>
                 </div>
               </div>
             </Col>
             <Col md="3" xs="12">
               <div className="ypBox ypBox--rBlock text-center h-md-100">
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Total Reward</h5>
-                  <p>1,000,000</p>
+                <div className="ypBox__block ypBox__block--border">
+                  <div className="yBoxSmall">
+                    <h5>Total Reward</h5>
+                    <p>1,000,000</p>
+                  </div>
                 </div>
-              </div>
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Reward Remaining</h5>
-                  <p>967,240.234</p>
+                <div className="ypBox__block ypBox__block--border">
+                  <div className="yBoxSmall">
+                    <h5>Reward Remaining</h5>
+                    <p>967,240.234</p>
+                  </div>
                 </div>
-              </div>
-              <div className="ypBox__block">
-                <div className="yBoxSmall">
-                  <h5>TVL</h5>
-                  <p>2,002,469.673</p>
+                <div className="ypBox__block">
+                  <div className="yBoxSmall">
+                    <h5>TVL</h5>
+                    <p>2,002,469.673</p>
+                  </div>
                 </div>
-              </div>
-              <div className="ypBox__blockmb-0">
-                <div className="graph">
-                  <img src={ypGraph} alt="" />
+                <div className="ypBox__blockmb-0">
+                  <div className="graph">
+                    <img src={ypGraph} alt="" />
+                  </div>
                 </div>
-              </div>
               </div>
             </Col>
-          </Row>          
+          </Row>
         </Container>
       </section>
     )
