@@ -23,6 +23,7 @@ import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
+import useStakerInfo from '../hooks/useStakerInfo'
 
 function Stake() {
   const dispatch = useDispatch();
@@ -30,13 +31,18 @@ function Stake() {
   const address = useSelector(state => state.authUser.address);
   const networkId = useSelector(state => state.authUser.networkId);
 
+  // TODO use me
+  const stakerInfo = useStakerInfo(address)
+
+
   const [yopBalance, setYopBalance] = useState(new BigNumber(0));
   const [stakeAmount, setStakeAmount] = useState(new BigNumber(0));
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
 
-
+  // TODO use me to show staking information
+  const stakerInfos = useStakerInfo(address); 
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
 
