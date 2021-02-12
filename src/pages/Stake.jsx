@@ -22,12 +22,17 @@ import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
+import useStakerInfo from '../hooks/useStakerInfo'
 
 function Stake() {
   const dispatch = useDispatch();
   const history = useHistory();
   const address = useSelector(state => state.authUser.address);
   const networkId = useSelector(state => state.authUser.networkId);
+
+  // TODO use me
+  const stakerInfo = useStakerInfo(address)
+
 
   const [yopBalance, setYopBalance] = useState(new BigNumber(0));
   const [stakeAmount, setStakeAmount] = useState(new BigNumber(0));
