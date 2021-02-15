@@ -37,6 +37,7 @@ function Stake() {
 
   const [yopBalance, setYopBalance] = useState(new BigNumber(0));
   const [stakeAmount, setStakeAmount] = useState(new BigNumber(0));
+  const [approvalCheck, setApprovalCheck] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
@@ -50,6 +51,7 @@ function Stake() {
     async function getStatus() {
       try {
         const balance = new BigNumber(await yopTokenContract.contract.methods.balanceOf(address).call());
+        console.log('balance', balance);
         if (!balance.eq(yopBalance)) {
           setYopBalance(balance);
         }
@@ -143,6 +145,16 @@ function Stake() {
         });
     }
   }
+
+  const handleCheckbox = () => {
+    setApprovalCheck(!approvalCheck);
+  }
+
+  const {
+    rewardsOwed,
+    rewardPool,
+    tvl,
+  } = contractInfos;
 
   if (!address || networkId !== config.networkId) {
     return (
@@ -253,7 +265,7 @@ function Stake() {
                     <Col md="8" xs="12">
                       <div className="ypLeft d-flex">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                          <input className="form-check-input" type="checkbox" value={approvalCheck} onChange={handleCheckbox} id="flexCheckDefault" />
                           <label className="form-check-label" htmlFor="flexCheckDefault">
                             <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
                           </label>
@@ -270,7 +282,7 @@ function Stake() {
                 </div>
                 <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300" onClick={e => onApproveAndStake()}>
+                  <button className="btn btn-primary btn-mw300" disabled={!approvalCheck} onClick={e => onApproveAndStake()}>
                     {
                       isApproved ? 'STAKE' : 'Approve'
                     }
@@ -292,24 +304,19 @@ function Stake() {
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Total Reward</h5>
-                  <p>1,000,000</p>
+                  <p>{rewardPool ? rewardPool.toString() : '0'}</p>
                 </div>
               </div>
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>967,240.234</p>
+                  <p>{rewardsOwed ? rewardsOwed.toNumber() : '0'}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>2,002,469.673</p>
-                </div>
-              </div>
-              <div className="ypBox__blockmb-0">
-                <div className="graph">
-                  <img src={ypGraph} alt="" />
+                  <p>{tvl ? tvl.toNumber() : '0'}</p>
                 </div>
               </div>
             </div>

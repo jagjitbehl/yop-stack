@@ -257,6 +257,7 @@ img{
 .cValue{
   width: 35px;
   height: 35px;
+  cursor: pointer;
   display: inline-block;
   @include border-radius(50%);
   line-height: 35px;

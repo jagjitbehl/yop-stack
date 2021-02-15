@@ -21,29 +21,6 @@ class Header extends Component{
                     <img src={logo} alt="Yop" />
                   </a>
                 </div>
-                <Nav className="d-md-flex d-none">
-                  <NavItem>
-                    <NavLink href="#">yPlatform</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">yProtocol</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">$YOP Token</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink active href="#">Stake</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Media</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Team</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="#">Partners</NavLink>
-                  </NavItem>
-                </Nav>
               </div>
             </Col>
           </Row>
