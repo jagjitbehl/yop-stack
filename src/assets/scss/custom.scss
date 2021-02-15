@@ -273,6 +273,11 @@ img{
   &+.cValue{
     margin-left: 1rem;
   }
+
+  &:hover{
+    background-color: $primary-color;
+    color: #fff;
+  }
 }
 
 .graph{
