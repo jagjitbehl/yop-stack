@@ -51,7 +51,6 @@ function Stake() {
     async function getStatus() {
       try {
         const balance = new BigNumber(await yopTokenContract.contract.methods.balanceOf(address).call());
-        console.log('balance', balance);
         if (!balance.eq(yopBalance)) {
           setYopBalance(balance);
         }
@@ -106,15 +105,15 @@ function Stake() {
         .stakeYOP(dayOption)
         .send({ from: address })
         .on('transactionHash', (hash) => {
-          console.log(hash);
+          console.log('hash', hash);
           setTxHash(hash);
         })
         .on('receipt', (result) => {
-          console.log(result);
+          console.log('result', result);
           setTxHash(null);
         })
         .on('error', (error) => {
-          console.log(error);
+          console.log('error', error);
           setTxHash(null);
         });
     } else {
@@ -127,8 +126,9 @@ function Stake() {
         NotificationManager.warning('Amount exceeded your yop balance');
         return;
       }
+      
       yopTokenContract.contract.methods
-        .approve(stakingContract.address, approveAmount)
+        .approve(stakingContract.address, approveAmount.toString())
         .send({ from: address })
         .on('transactionHash', (hash) => {
           console.log(hash);
@@ -310,13 +310,13 @@ function Stake() {
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>{rewardsOwed ? rewardsOwed.toNumber() : '0'}</p>
+                  <p>{rewardsOwed ? rewardsOwed.toString() : '0'}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>{tvl ? tvl.toNumber() : '0'}</p>
+                  <p>{tvl ? tvl.toString() : '0'}</p>
                 </div>
               </div>
             </div>
