@@ -24,6 +24,8 @@ import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
+import StakeBarActive from './StakeBarActive';
+import loader from '../assets/images/loader.gif'
 
 function Stake() {
   const dispatch = useDispatch();
@@ -41,9 +43,11 @@ function Stake() {
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   // TODO use me to show staking information
-  const stakerInfos = useStakerInfo(address); 
+  const stakerInfos = useStakerInfo(address);
+  console.log('stakerInfos', stakerInfos);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
 
@@ -62,10 +66,12 @@ function Stake() {
         }
       } catch (error) {
       }
+      setLoading(false);
     }
     if (address) {
       getStatus();
     }
+
   }, [address, networkId]);
 
   const onMetamaskConnect = async () => {
@@ -156,6 +162,10 @@ function Stake() {
     tvl,
   } = contractInfos;
 
+  if (loading) {
+    return <img src={loader} className="loader" alt="loading..." />
+  }
+
   if (!address || networkId !== config.networkId) {
     return (
       <section className="innerSec stakeSec pt-md-0 pt-5">
@@ -200,6 +210,15 @@ function Stake() {
         </Container>
       </section>
     )
+  }
+
+  if (isApproved && stakerInfos.hasStaked && stakerInfos.hasStaked === true) {
+    return (
+      <StakeBarActive
+        stakerInfos={stakerInfo}
+        contractInfos={contractInfos} 
+      />
+    );
   }
 
   return (
