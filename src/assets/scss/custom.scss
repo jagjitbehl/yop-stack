@@ -257,6 +257,7 @@ img{
 .cValue{
   width: 35px;
   height: 35px;
+  cursor: pointer;
   display: inline-block;
   @include border-radius(50%);
   line-height: 35px;
@@ -271,6 +272,11 @@ img{
   }
   &+.cValue{
     margin-left: 1rem;
+  }
+
+  &:hover{
+    background-color: $primary-color;
+    color: #fff;
   }
 }
 
