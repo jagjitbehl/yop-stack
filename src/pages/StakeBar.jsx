@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {
-  Container, Row, Col, Button, Input
+  Container, Row, Col,
 } from 'reactstrap';
 
 import Icon1 from '../assets/images/1.png';
@@ -32,15 +32,15 @@ class StakeBar extends Component{
                     <Row>
                       <Col md="6" xs="12">
                         <div className="ypLeft d-flex align-items-center">
-                          <img className="ypdIcon mr-2" src={Icon1} /> <span class="label-medium font-weight-medium">Stake Amount</span>
-                          <span class="label-medium font-weight-medium text-primary pl-3">1,234.12345678 </span>
-                          <span class="label-medium font-weight-medium text-primary pl-3">$YOP</span>
+                          <img className="ypdIcon mr-2" src={Icon1} /> <span className="label-medium font-weight-medium">Stake Amount</span>
+                          <span className="label-medium font-weight-medium text-primary pl-3">1,234.12345678 </span>
+                          <span className="label-medium font-weight-medium text-primary pl-3">$YOP</span>
                         </div>
                       </Col>
                       <Col md="6" xs="12">
                         <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
                           <img className="ypdIcon" src={Icon3} /> 
-                          <span class="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
+                          <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
                           <span className="label-medium font-weight-medium text-success mb-0 pl-3">+0.0235 $YOP</span>
                         </div>
                       </Col>
@@ -49,8 +49,8 @@ class StakeBar extends Component{
                   <div className="ypBox__block">
                     <div className="progressWrap my-5">
                       <span className="posLtop" style={{ left: '4%'}}><span className="text-success label-medium">+0.0235 $YOP</span><span className="d-block label-small font-weight-medium">4th February 2021</span></span>
-                      <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '5%'}}></div>
+                      <div className="progress">
+                        <div className="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '5%'}}></div>
                       </div>
                       <span className="posLbott"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary font-weight-medium">1st February 2021</span></span>
                       <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary  font-weight-medium">1st March 2021</span></span>

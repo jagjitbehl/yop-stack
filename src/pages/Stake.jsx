@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
 import {
-  Container, Row, Col, Button, Input,
+  Container, Row, Col, Input,
 } from 'reactstrap';
 import { NotificationManager } from 'react-notifications';
 import BigNumber from 'bignumber.js'
@@ -11,16 +10,14 @@ import config from '../config';
 import { useHistory } from "react-router-dom";
 import { web3 } from '../yop/web3';
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { getETHBalance, sendTransaction, formatDecimal, getHashLink } from '../yop/utils';
-import { setAddress, setNetworkId, setConnectType, setError } from "../redux/actions";
+import { formatDecimal, getHashLink } from '../yop/utils';
+import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
 
 import Icon1 from '../assets/images/1.jpg';
 import Icon2 from '../assets/images/2.jpg';
 import Icon3 from '../assets/images/3.jpg';
-import Icon4 from '../assets/images/4.jpg';
 import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
-import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
@@ -43,7 +40,7 @@ function Stake() {
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // TODO use me to show staking information
   const stakerInfos = useStakerInfo(address);
@@ -52,6 +49,7 @@ function Stake() {
   const contractInfos = useContractInfos();
 
   useEffect(() => {
+    setLoading(false);
     async function getStatus() {
       try {
         const balance = new BigNumber(await yopTokenContract.contract.methods.balanceOf(address).call());
@@ -65,12 +63,15 @@ function Stake() {
           setStakeAmount(allow.div(1e8));
         }
       } catch (error) {
+        console.log(error);
       }
-      setLoading(false);
     }
+
     if (address) {
       getStatus();
     }
+
+    setLoading(false);
 
   }, [address, networkId]);
 
@@ -180,7 +181,7 @@ function Stake() {
                 <div className="btnWrap mb-md-0 mb-4">
                   <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
                   {/* <Link to="/token" className="btn btn-primary">Unlock Wallet</Link> */}
-                  <button className="btn btn-primary" onClick={e => onMetamaskConnect()}>Unlock Wallet</button>
+                  <button className="btn btn-primary" onClick={() => onMetamaskConnect()}>Unlock Wallet</button>
                 </div>
               </div>
             </Col>
@@ -246,9 +247,9 @@ function Stake() {
                       <div className="ypRight ypRight--icon d-flex align-items-center">
                         <div className="inputIcon">
                           <img src={inpuIcon} alt="" />
-                          <Input type="number" value={stakeAmount} onChange={e => { setStakeAmount(e.target.value) }} disabled={isApproved} />
+                          <Input type="number" value={stakeAmount} onChange={(e) => { setStakeAmount(e.target.value) }} disabled={isApproved} />
                         </div>
-                        <span className="text-primary label-medium font-weight-bold pl-3" onClick={e => onMaxButtonClicked()}>MAX</span>
+                        <span className="text-primary label-medium font-weight-bold pl-3" onClick={() => onMaxButtonClicked()}>MAX</span>
                       </div>
                     </Col>
                   </Row>
@@ -260,9 +261,9 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <span className={dayOption === 1 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(1)}>30</span>
-                        <span className={dayOption === 2 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(2)}>60</span>
-                        <span className={dayOption === 3 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(3)}>90</span>
+                        <span className={dayOption === 1 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(1)}>30</span>
+                        <span className={dayOption === 2 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(2)}>60</span>
+                        <span className={dayOption === 3 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(3)}>90</span>
                       </div>
                     </Col>
                   </Row>
@@ -301,7 +302,7 @@ function Stake() {
                 </div>
                 <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300" disabled={!approvalCheck} onClick={e => onApproveAndStake()}>
+                  <button className="btn btn-primary btn-mw300" disabled={!approvalCheck} onClick={() => onApproveAndStake()}>
                     {
                       isApproved ? 'STAKE' : 'Approve'
                     }
@@ -314,7 +315,7 @@ function Stake() {
                   <div className="ypInnner flex-row">
                     <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
                   </div>
-                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" target="_blank"><u>View Transaction on Etherscan</u></a>
+                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}
             </div>
           </Col>
