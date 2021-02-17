@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Container, Row, Col,
 } from 'reactstrap';
 import moment from 'moment';
+
+import { yopTokenContract, stakingContract } from '../yop/contracts';
 
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
@@ -12,6 +15,7 @@ function StakeBarActive({
   stakerInfos,
   contractInfos,
 }) {
+  const [txHash, setTxHash] = useState(null);
 
   const {
     rewardsOwed,
@@ -28,8 +32,28 @@ function StakeBarActive({
     endOfStakeMillis,
   } = stakerInfos;
 
+  const address = useSelector(state => state.authUser.address);
+
   const progressCompleted = Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100);
   console.log('progressCompleted', progressCompleted);
+
+  const onClaim = async () => {
+    stakingContract.contract.methods
+      .claimRewards()
+      .send({ from: address })
+      .on('transactionHash', (hash) => {
+        console.log('hash', hash);
+        setTxHash(hash);
+      })
+      .on('receipt', (result) => {
+        console.log('result', result);
+        setTxHash(null);
+      })
+      .on('error', (error) => {
+        console.log('error', error);
+        setTxHash(null);
+      });
+  }
 
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
@@ -56,7 +80,7 @@ function StakeBarActive({
                     </Col>
                     <Col md="6" xs="12">
                       <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
-                        <img className="ypdIcon" src={Icon3} /> 
+                        <img className="ypdIcon" src={Icon3} />
                         <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
                         <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`${reward.toString()}`} $YOP</span>
                       </div>
@@ -65,43 +89,43 @@ function StakeBarActive({
                 </div>
                 <div className="ypBox__block">
                   <div className="progressWrap my-5">
-                    <span className="posLtop posLtop--end" style={{ left: '75%'}}><span className="text-success label-medium">Staking Complete</span></span>
+                    <span className="posLtop posLtop--end" style={{ left: '75%' }}><span className="text-success label-medium">Staking Complete</span></span>
                     <div className="progress">
-                      <div className="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style={{width: `${progressCompleted}%`}}></div>
+                      <div className="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style={{ width: `${progressCompleted}%` }}></div>
                     </div>
                     <span className="posLbott"><span className="d-block text-primary font-weight-medium">{moment(startOfStake).format('Do MMMM YYYY')}</span></span>
                     <span className="posRbott text-right"><span className="d-block text-primary  font-weight-medium">{moment(endOfStake).format('Do MMMM YYYY')}</span></span>
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">
-                <a href="/processresult" className="btn btn-primary btn-mw300">UNSTAKE & CLAIM REWARD</a>
+                  <button className="btn btn-primary btn-mw300" onClick={() => onClaim()}>UNSTAKE & CLAIM REWARD</button>
                 </div>
               </div>
             </div>
           </Col>
           <Col md="3" xs="12">
             <div className="ypBox ypBox--rBlock text-center h-md-100">
-            <div className="ypBox__block ypBox__block--border">
-              <div className="yBoxSmall">
-                <h5>Total Reward</h5>
-                <p>{rewardPool ? rewardPool.toString() : '0'}</p>
+              <div className="ypBox__block ypBox__block--border">
+                <div className="yBoxSmall">
+                  <h5>Total Reward</h5>
+                  <p>{rewardPool ? rewardPool.toString() : '0'}</p>
+                </div>
               </div>
-            </div>
-            <div className="ypBox__block ypBox__block--border">
-              <div className="yBoxSmall">
-                <h5>Reward Remaining</h5>
-                <p>{rewardsOwed ? rewardsOwed.toString() : '0'}</p>
+              <div className="ypBox__block ypBox__block--border">
+                <div className="yBoxSmall">
+                  <h5>Reward Remaining</h5>
+                  <p>{rewardsOwed ? rewardsOwed.toString() : '0'}</p>
+                </div>
               </div>
-            </div>
-            <div className="ypBox__block">
-              <div className="yBoxSmall">
-                <h5>TVL</h5>
-                <p>{tvl ? tvl.toString() : '0'}</p>
+              <div className="ypBox__block">
+                <div className="yBoxSmall">
+                  <h5>TVL</h5>
+                  <p>{tvl ? tvl.toString() : '0'}</p>
+                </div>
               </div>
-            </div>
             </div>
           </Col>
-        </Row>          
+        </Row>
       </Container>
     </section>
   )
