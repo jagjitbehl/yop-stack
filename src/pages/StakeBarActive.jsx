@@ -1,7 +1,8 @@
-import React,{Component} from 'react';
+import React, {useEffect} from 'react';
 import {
   Container, Row, Col, Button, Input
 } from 'reactstrap';
+import moment from 'moment';
 
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
@@ -22,9 +23,16 @@ function StakeBarActive({
   const {
     amount,
     reward,
+    startOfStake,
+    endOfStake,
+    startOfStakeMillis,
+    endOfStakeMillis,
+    stakingTime,
   } = stakerInfos;
 
-  console.log('contractInfos', contractInfos);
+  console.log('stakerInfos', stakerInfos);
+  const progressCompleted = Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100);
+  console.log('progressCompleted', progressCompleted);
 
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
@@ -64,8 +72,8 @@ function StakeBarActive({
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style={{ width: '92%'}}></div>
                     </div>
-                    <span className="posLbott"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary font-weight-medium">1st February 2021</span></span>
-                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary  font-weight-medium">1st March 2021</span></span>
+                    <span className="posLbott"><span className="d-block text-primary font-weight-medium">{moment(startOfStake).format('Do MMMM YYYY')}</span></span>
+                    <span className="posRbott text-right"><span className="d-block text-primary  font-weight-medium">{moment(endOfStake).format('Do MMMM YYYY')}</span></span>
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">

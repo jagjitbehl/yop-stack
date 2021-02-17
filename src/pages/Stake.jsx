@@ -43,7 +43,7 @@ function Stake() {
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // TODO use me to show staking information
   const stakerInfos = useStakerInfo(address);

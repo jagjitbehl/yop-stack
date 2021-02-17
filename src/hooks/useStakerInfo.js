@@ -20,6 +20,7 @@ export default function useStakerInfo(address) {
                     stakingContract.contract.methods.stakedFor3().call(),
                 ])
 
+                console.log('stakerInfoResponse', stakerInfoResponse);
                 const option = parseInt(stakerInfoResponse[2], 10)
                 const stakingTime = parseInt(stakerInfoResponse[1], 10)
                 const stakedForNumbers = stakedFor.map(value => parseInt(value, 10))
