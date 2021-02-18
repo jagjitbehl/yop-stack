@@ -6,7 +6,7 @@ import {
 import moment from 'moment';
 
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { formatDecimal, getRoundFigure } from '../yop/utils';
+import { formatDecimal, getRoundFigure, getHashLink } from '../yop/utils';
 
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
@@ -15,8 +15,10 @@ import Icon5 from '../assets/images/5.png';
 function StakeBarActive({
   stakerInfos,
   contractInfos,
+  handleStakeResult,
+  networkId,
 }) {
-  const [txHash, setTxHash] = useState(null);
+  const [txHash, setTxHash] = useState('');
 
   const {
     rewardsOwed,
@@ -44,6 +46,7 @@ function StakeBarActive({
       .on('transactionHash', (hash) => {
         console.log('hash', hash);
         setTxHash(hash);
+        handleStakeResult(hash);
       })
       .on('receipt', (result) => {
         console.log('result', result);
@@ -103,6 +106,13 @@ function StakeBarActive({
                   <button className="btn btn-primary btn-mw300" onClick={() => onClaim()}>UNSTAKE & CLAIM REWARD</button>
                 </div>
               </div>
+              {txHash ?
+                <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
+                  <div className="ypInnner flex-row">
+                    <h5 className="text-white font-weight-normal">Claim transaction pending...</h5>
+                  </div>
+                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
+                </div> : ''}
             </div>
           </Col>
           <Col md="3" xs="12">

@@ -238,13 +238,13 @@ function Stake() {
     )
   }
 
-  console.log('isApproved', isApproved);
-
   if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
-        contractInfos={contractInfos} 
+        contractInfos={contractInfos}
+        handleStakeResult={handleStakeResult}
+        networkId={networkId}
       />
     );
   }
@@ -351,7 +351,7 @@ function Stake() {
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
+                    <h5 className="text-white font-weight-normal">{`${isApproved ? 'Stake' : 'Approve'} transaction pending...`}</h5>
                   </div>
                   <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}

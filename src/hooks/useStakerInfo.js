@@ -11,7 +11,6 @@ export default function useStakerInfo(address) {
                 return
             }
             const stakerInfoResponse = await stakingContract.contract.methods.getStakerInfo(address).call();
-            console.log('stakerInfoResponse', stakerInfoResponse);
 
             if (!new BigNumber(stakerInfoResponse[0]).isZero()) {
                 const [rewardResponse, ...stakedFor] = await Promise.all([
@@ -20,13 +19,13 @@ export default function useStakerInfo(address) {
                     stakingContract.contract.methods.stakedFor2().call(),
                     stakingContract.contract.methods.stakedFor3().call(),
                 ])
-                
+
                 const option = parseInt(stakerInfoResponse[2], 10)
                 const stakingTime = parseInt(stakerInfoResponse[1], 10)
                 const stakedForNumbers = stakedFor.map(value => parseInt(value, 10))
 
                 const startOfStakeMillis = stakingTime * 1000
-                const endOfStakeMillis = (stakedForNumbers[option] + stakingTime) * 1000
+                const endOfStakeMillis = (stakedForNumbers[option - 1] + stakingTime) * 1000
                 setStakerInfo({
                     hasStaked: true,
                     amount: new BigNumber(stakerInfoResponse[0]),
