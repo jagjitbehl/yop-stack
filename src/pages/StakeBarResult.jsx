@@ -11,7 +11,7 @@ import IconLock from '../assets/images/lockIcon.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
-import { formatDecimal, getHashLink } from '../yop/utils';
+import { formatDecimal, getHashLink, getRoundFigure} from '../yop/utils';
 
 function StakeBarResult({
   stakerInfos,
@@ -34,6 +34,8 @@ function StakeBarResult({
     startOfStakeMillis,
     endOfStakeMillis,
   } = stakerInfos;
+
+  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
 
   return(
     <section className="innerSec stakeSec pt-md-0 pt-5">
@@ -120,7 +122,7 @@ function StakeBarResult({
               <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                 <div className="ypInnner flex-row">
                   <img className="mb-5" src={IconLock} />
-                  <h4 className="text-white font-weight-normal"><span><strong>{formatDecimal(amount, 8)}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{formatDecimal(rewardPool, 8)}</strong> $YOP Earned</span></h4>
+                  <h4 className="text-white font-weight-normal"><span><strong>{getRoundFigure(formatDecimal(amount, 8))}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{getRoundFigure(formatDecimal(reward, 8))}</strong> $YOP Earned</span></h4>
                 </div>
                 {stakeResultHash &&
                 <a href={`${getHashLink(networkId, stakeResultHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
@@ -133,19 +135,19 @@ function StakeBarResult({
             <div className="ypBox__block ypBox__block--border">
               <div className="yBoxSmall">
                 <h5>Total Reward</h5>
-                <p>{formatDecimal(rewardPool, 8)}</p>
+                <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
               </div>
             </div>
             <div className="ypBox__block ypBox__block--border">
               <div className="yBoxSmall">
                 <h5>Reward Remaining</h5>
-                <p>{formatDecimal(rewardsOwed, 8)}</p>
+                <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
               </div>
             </div>
             <div className="ypBox__block">
               <div className="yBoxSmall">
                 <h5>TVL</h5>
-                <p>{formatDecimal(tvl, 8)}</p>
+                <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
               </div>
             </div>
             </div>

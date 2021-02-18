@@ -6,7 +6,7 @@ import {
 import moment from 'moment';
 
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { formatDecimal } from '../yop/utils';
+import { formatDecimal, getRoundFigure } from '../yop/utils';
 
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
@@ -55,6 +55,8 @@ function StakeBarActive({
       });
   }
 
+  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
+
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
@@ -74,7 +76,7 @@ function StakeBarActive({
                     <Col md="6" xs="12">
                       <div className="ypLeft d-flex align-items-center">
                         <img className="ypdIcon mr-2" src={Icon1} /> <span className="label-medium font-weight-medium">Stake Amount</span>
-                        <span className="label-medium font-weight-medium text-primary pl-3">{formatDecimal(amount, 8)}</span>
+                        <span className="label-medium font-weight-medium text-primary pl-3">{getRoundFigure(formatDecimal(amount, 8))}</span>
                         <span className="label-medium font-weight-medium text-primary pl-3">$YOP</span>
                       </div>
                     </Col>
@@ -82,7 +84,7 @@ function StakeBarActive({
                       <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
                         <img className="ypdIcon" src={Icon3} />
                         <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
-                        <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`${formatDecimal(reward, 8)}`} $YOP</span>
+                        <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`${getRoundFigure(formatDecimal(reward, 8))}`} $YOP</span>
                       </div>
                     </Col>
                   </Row>
@@ -108,19 +110,19 @@ function StakeBarActive({
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Total Reward</h5>
-                  <p>{formatDecimal(rewardPool, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>{formatDecimal(rewardsOwed, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>{formatDecimal(tvl, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
                 </div>
               </div>
             </div>

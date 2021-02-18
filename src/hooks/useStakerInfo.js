@@ -10,7 +10,8 @@ export default function useStakerInfo(address) {
             if (!address) {
                 return
             }
-            const stakerInfoResponse = await stakingContract.contract.methods.getStakerInfo(address).call()
+            const stakerInfoResponse = await stakingContract.contract.methods.getStakerInfo(address).call();
+            console.log('stakerInfoResponse', stakerInfoResponse);
 
             if (!new BigNumber(stakerInfoResponse[0]).isZero()) {
                 const [rewardResponse, ...stakedFor] = await Promise.all([
@@ -19,8 +20,7 @@ export default function useStakerInfo(address) {
                     stakingContract.contract.methods.stakedFor2().call(),
                     stakingContract.contract.methods.stakedFor3().call(),
                 ])
-
-                console.log('stakerInfoResponse', stakerInfoResponse);
+                
                 const option = parseInt(stakerInfoResponse[2], 10)
                 const stakingTime = parseInt(stakerInfoResponse[1], 10)
                 const stakedForNumbers = stakedFor.map(value => parseInt(value, 10))

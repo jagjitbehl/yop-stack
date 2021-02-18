@@ -105,6 +105,9 @@ const formatDecimal = (value, decimal = 18, numPoint = 4) => {
   });
 
   const data = new BigNumber(value).dividedBy(new BigNumber(10).pow(decimal));
+  if (isNaN(data)) {
+    return '0';
+  }
   if (data.isGreaterThan(1)) {
     return data.toFormat(2);
   }
@@ -123,6 +126,23 @@ const getHashLink = (networkId, txHash) => {
   return url;
 }
 
+const getContractLink = (networkId, txHash) => {
+  let url = 'https://';
+  if (networkId === '1') {
+    url += `etherscan.io/contractsVerified/${txHash}`;
+  } else if (networkId === '3') {
+    url += `ropsten.etherscan.io/contractsVerified/${txHash}`;
+  } else {
+    url += `etherscan.io`;
+  }
+  return url;
+}
+
+const getRoundFigure = (number) => {
+  const numWithoutComma = number.toString().replace(/,/g,'');
+  return Math.round(numWithoutComma * 10) / 10
+}
+
 export {
   sendTransaction,
   bnToDec,
@@ -132,4 +152,6 @@ export {
   formatDecimal,
   getETHBalance,
   getHashLink,
+  getContractLink,
+  getRoundFigure,
 };

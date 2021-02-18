@@ -326,3 +326,9 @@ img{
   margin: auto;
   float :none;
 }
+
+.approve:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

@@ -10,7 +10,7 @@ import config from '../config';
 import { useHistory } from "react-router-dom";
 import { web3 } from '../yop/web3';
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { formatDecimal, getHashLink } from '../yop/utils';
+import { formatDecimal, getHashLink, getContractLink, getRoundFigure } from '../yop/utils';
 import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
 import { contractAddresses } from '../yop/constants';
 
@@ -50,6 +50,8 @@ function Stake() {
   const stakerInfos = useStakerInfo(address);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
+  console.log('stakerInfos', stakerInfos);
+  console.log('contractInfos', contractInfos);
 
   useEffect(() => {
     setTimeout(() => {
@@ -180,8 +182,11 @@ function Stake() {
   } = contractInfos;
 
   const {
-    rewardTaken
+    rewardTaken,
+    hasStaked,
   } = stakerInfos;
+
+  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
 
   if (loading) {
     return <img src={loader} className="loader" alt="loading..." />
@@ -233,7 +238,9 @@ function Stake() {
     )
   }
 
-  if (isApproved === true && stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
+  console.log('isApproved', isApproved);
+
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
@@ -242,7 +249,7 @@ function Stake() {
     );
   }
 
-  if (isApproved === true && rewardTaken === true) {
+  if (rewardTaken === true) {
     return (
       <StakeBarResult 
         stakerInfos={stakerInfo}
@@ -325,7 +332,7 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <h5><a href={`${getHashLink(networkId, contractAddresses['staking'][networkId])}`} rel="noreferrer" target="_blank" style={{ color: 'black', textDecoration: 'none'}} className="pr-1 font-weight-normal small">View Contract on Etherscan</a>
+                        <h5><a href={`${getContractLink(networkId, contractAddresses['staking'][networkId])}`} rel="noreferrer" target="_blank" style={{ color: 'black', textDecoration: 'none'}} className="pr-1 font-weight-normal small">View Contract on Etherscan</a>
                           <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
                       </div>
                     </Col>
@@ -333,7 +340,7 @@ function Stake() {
                 </div>
                 <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300" disabled={!approvalCheck} onClick={() => onApproveAndStake()}>
+                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck} onClick={() => onApproveAndStake()}>
                     {
                       isApproved ? 'STAKE' : 'Approve'
                     }
@@ -355,19 +362,19 @@ function Stake() {
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Total Reward</h5>
-                  <p>{formatDecimal(rewardPool, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>{formatDecimal(rewardsOwed, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>{formatDecimal(tvl, 8)}</p>
+                  <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
                 </div>
               </div>
             </div>
