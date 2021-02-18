@@ -12,6 +12,7 @@ import { web3 } from '../yop/web3';
 import { yopTokenContract, stakingContract } from '../yop/contracts';
 import { formatDecimal, getHashLink } from '../yop/utils';
 import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
+import { contractAddresses } from '../yop/constants';
 
 import Icon1 from '../assets/images/1.jpg';
 import Icon2 from '../assets/images/2.jpg';
@@ -22,7 +23,8 @@ import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
 import StakeBarActive from './StakeBarActive';
-import loader from '../assets/images/loader.gif'
+import loader from '../assets/images/loader.gif';
+import StakeBarResult from './StakeBarResult';
 
 function Stake() {
   const dispatch = useDispatch();
@@ -39,17 +41,23 @@ function Stake() {
   const [approvalCheck, setApprovalCheck] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
+  const [stakeResultHash, setStakeResultHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [rewardYop, setRewardYop] = useState(0);
 
   // TODO use me to show staking information
   const stakerInfos = useStakerInfo(address);
-  console.log('stakerInfos', stakerInfos);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
 
   useEffect(() => {
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false) 
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     async function getStatus() {
       try {
         const balance = new BigNumber(await yopTokenContract.contract.methods.balanceOf(address).call());
@@ -71,9 +79,13 @@ function Stake() {
       getStatus();
     }
 
-    setLoading(false);
-
   }, [address, networkId]);
+
+  useEffect(() => {
+    const rewardPercentage = (dayOption === 1 ?  6 : (dayOption === 2 ? 15 : 33));
+    const value = ((stakeAmount * rewardPercentage) / 100);
+    setRewardYop(value);
+  }, [stakeAmount, dayOption]);
 
   const onMetamaskConnect = async () => {
     if (typeof window.ethereum === 'undefined') {
@@ -157,11 +169,19 @@ function Stake() {
     setApprovalCheck(!approvalCheck);
   }
 
+  const handleStakeResult = (hash) => {
+    setStakeResultHash(hash)
+  }
+
   const {
     rewardsOwed,
     rewardPool,
     tvl,
   } = contractInfos;
+
+  const {
+    rewardTaken
+  } = stakerInfos;
 
   if (loading) {
     return <img src={loader} className="loader" alt="loading..." />
@@ -213,11 +233,22 @@ function Stake() {
     )
   }
 
-  if (isApproved && stakerInfos.hasStaked && stakerInfos.hasStaked === true) {
+  if (isApproved === true && stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
         contractInfos={contractInfos} 
+      />
+    );
+  }
+
+  if (isApproved === true && rewardTaken === true) {
+    return (
+      <StakeBarResult 
+        stakerInfos={stakerInfo}
+        contractInfos={contractInfos}
+        stakeResultHash={stakeResultHash}
+        networkId={networkId}
       />
     );
   }
@@ -275,7 +306,7 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <h5><span className="small text-primary font-weight-bold">$YOP</span><span className="pl-3 font-weight-normal">0</span></h5>
+                        <h5><span className="small text-primary font-weight-bold">$YOP</span><span className="pl-3 font-weight-normal">{rewardYop}</span></h5>
                       </div>
                     </Col>
                   </Row>
@@ -294,7 +325,7 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <h5><span className="pr-1 font-weight-normal small">View Contract on Etherscan</span>
+                        <h5><a href={`${getHashLink(networkId, contractAddresses['staking'][networkId])}`} rel="noreferrer" target="_blank" style={{ color: 'black', textDecoration: 'none'}} className="pr-1 font-weight-normal small">View Contract on Etherscan</a>
                           <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
                       </div>
                     </Col>
@@ -324,19 +355,19 @@ function Stake() {
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Total Reward</h5>
-                  <p>{rewardPool ? rewardPool.toString() : '0'}</p>
+                  <p>{formatDecimal(rewardPool, 8)}</p>
                 </div>
               </div>
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>{rewardsOwed ? rewardsOwed.toString() : '0'}</p>
+                  <p>{formatDecimal(rewardsOwed, 8)}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>{tvl ? tvl.toString() : '0'}</p>
+                  <p>{formatDecimal(tvl, 8)}</p>
                 </div>
               </div>
             </div>
