@@ -50,7 +50,6 @@ function Stake() {
   const stakerInfos = useStakerInfo(address);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
-  console.log('stakerInfos', stakerInfos);
 
   useEffect(() => {
     setTimeout(() => {
@@ -188,7 +187,11 @@ function Stake() {
   const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
 
   if (loading) {
-    return <img src={loader} className="loader" alt="loading..." />
+    return (
+      <div  className="siteLoader">
+        <img src={loader} alt="loading..." />
+      </div>
+    )
   }
 
   if (!address || networkId !== config.networkId) {

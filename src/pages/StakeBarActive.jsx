@@ -24,7 +24,7 @@ function StakeBarActive() {
   const networkId = useSelector(state => state.authUser.networkId);
 
   const stakerInfo = useStakerInfo(address);
-  const [txHash, setTxHash] = useState('');
+  const [txHash, setTxHash] = useState(null);
   const [loading, setLoading] = useState(true);
    const location = useLocation();
   // TODO use me to show staking information
@@ -110,7 +110,7 @@ function StakeBarActive() {
                 </div>
                 <div className="ypBox__block">
                   <div className="progressWrap my-5">
-                    <span className="posLtop posLtop--end" style={{ left: '75%' }}><span className="text-success label-medium">Staking Complete</span></span>
+                    <span className="posLtop posLtop--end"><span className="text-success label-medium">Staking Complete</span></span>
                     <div className="progress">
                       <div className="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style={{ width: `${progressCompleted}%` }}></div>
                     </div>
