@@ -36,7 +36,7 @@ class StakeToken extends Component {
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon1} /> <span class="label-medium font-weight-medium">Stake Amount</span></div>
+                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon1} /> <span className="label-medium font-weight-medium">Stake Amount</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight ypRight--icon d-flex align-items-center">
@@ -52,7 +52,7 @@ class StakeToken extends Component {
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon2} /> <span class="label-medium font-weight-medium">Stake Period </span><span className="small">(Days)</span></div>
+                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon2} /> <span className="label-medium font-weight-medium">Stake Period </span><span className="small">(Days)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -66,7 +66,7 @@ class StakeToken extends Component {
                   <div className="ypBox__block">
                     <Row>
                       <Col md="8" xs="12">
-                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon3} /> <span class="label-medium font-weight-medium">Reward</span> <span className="small">(Potential earning at the end of stake period)</span></div>
+                        <div className="ypLeft d-flex align-items-center"><img className="ypdIcon mr-2" src={Icon3} /> <span className="label-medium font-weight-medium">Reward</span> <span className="small">(Potential earning at the end of stake period)</span></div>
                       </Col>
                       <Col md="4" xs="12">
                         <div className="ypRight text-right">
@@ -81,7 +81,7 @@ class StakeToken extends Component {
                         <div className="ypLeft d-flex">
                           <div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
                               <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
                             </label>
                           </div>

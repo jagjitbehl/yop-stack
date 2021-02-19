@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
 import {
-  Container, Row, Col, Button, Input,
+  Container, Row, Col, Input,
 } from 'reactstrap';
 import { NotificationManager } from 'react-notifications';
 import BigNumber from 'bignumber.js'
@@ -11,19 +10,21 @@ import config from '../config';
 import { useHistory } from "react-router-dom";
 import { web3 } from '../yop/web3';
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { getETHBalance, sendTransaction, formatDecimal, getHashLink } from '../yop/utils';
-import { setAddress, setNetworkId, setConnectType, setError } from "../redux/actions";
+import { formatDecimal, getHashLink, getContractLink, getRoundFigure } from '../yop/utils';
+import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
+import { contractAddresses } from '../yop/constants';
 
 import Icon1 from '../assets/images/1.jpg';
 import Icon2 from '../assets/images/2.jpg';
 import Icon3 from '../assets/images/3.jpg';
-import Icon4 from '../assets/images/4.jpg';
 import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
-import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
+import StakeBarActive from './StakeBarActive';
+import loader from '../assets/images/loader.gif';
+import StakeBarResult from './StakeBarResult';
 
 function Stake() {
   const dispatch = useDispatch();
@@ -40,12 +41,22 @@ function Stake() {
   const [approvalCheck, setApprovalCheck] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [txHash, setTxHash] = useState(null);
+  const [stakeResultHash, setStakeResultHash] = useState(null);
   const [dayOption, setDayOption] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [rewardYop, setRewardYop] = useState(0);
 
   // TODO use me to show staking information
-  const stakerInfos = useStakerInfo(address); 
+  const stakerInfos = useStakerInfo(address);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
+  console.log('stakerInfos', stakerInfos);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false) 
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     async function getStatus() {
@@ -61,12 +72,21 @@ function Stake() {
           setStakeAmount(allow.div(1e8));
         }
       } catch (error) {
+        console.log(error);
       }
     }
+
     if (address) {
       getStatus();
     }
+
   }, [address, networkId]);
+
+  useEffect(() => {
+    const rewardPercentage = (dayOption === 1 ?  6 : (dayOption === 2 ? 15 : 33));
+    const value = ((stakeAmount * rewardPercentage) / 100);
+    setRewardYop(value);
+  }, [stakeAmount, dayOption]);
 
   const onMetamaskConnect = async () => {
     if (typeof window.ethereum === 'undefined') {
@@ -105,12 +125,12 @@ function Stake() {
         .stakeYOP(dayOption)
         .send({ from: address })
         .on('transactionHash', (hash) => {
-          console.log('hash', hash);
           setTxHash(hash);
         })
         .on('receipt', (result) => {
           console.log('result', result);
           setTxHash(null);
+          history.push('/processbaractive');
         })
         .on('error', (error) => {
           console.log('error', error);
@@ -150,11 +170,26 @@ function Stake() {
     setApprovalCheck(!approvalCheck);
   }
 
+  const handleStakeResult = (hash) => {
+    setStakeResultHash(hash)
+  }
+
   const {
     rewardsOwed,
     rewardPool,
     tvl,
   } = contractInfos;
+
+  const {
+    rewardTaken,
+    hasStaked,
+  } = stakerInfos;
+
+  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
+
+  if (loading) {
+    return <img src={loader} className="loader" alt="loading..." />
+  }
 
   if (!address || networkId !== config.networkId) {
     return (
@@ -170,7 +205,7 @@ function Stake() {
                 <div className="btnWrap mb-md-0 mb-4">
                   <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
                   {/* <Link to="/token" className="btn btn-primary">Unlock Wallet</Link> */}
-                  <button className="btn btn-primary" onClick={e => onMetamaskConnect()}>Unlock Wallet</button>
+                  <button className="btn btn-primary" onClick={() => onMetamaskConnect()}>Unlock Wallet</button>
                 </div>
               </div>
             </Col>
@@ -202,6 +237,28 @@ function Stake() {
     )
   }
 
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
+    return (
+      <StakeBarActive
+        stakerInfos={stakerInfo}
+        contractInfos={contractInfos}
+        handleStakeResult={handleStakeResult}
+        networkId={networkId}
+      />
+    );
+  }
+
+  if (rewardTaken === true) {
+    return (
+      <StakeBarResult 
+        stakerInfos={stakerInfo}
+        contractInfos={contractInfos}
+        stakeResultHash={stakeResultHash}
+        networkId={networkId}
+      />
+    );
+  }
+
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
@@ -227,9 +284,9 @@ function Stake() {
                       <div className="ypRight ypRight--icon d-flex align-items-center">
                         <div className="inputIcon">
                           <img src={inpuIcon} alt="" />
-                          <Input type="number" value={stakeAmount} onChange={e => { setStakeAmount(e.target.value) }} disabled={isApproved} />
+                          <Input type="number" value={stakeAmount} onChange={(e) => { setStakeAmount(e.target.value) }} disabled={isApproved} />
                         </div>
-                        <span className="text-primary label-medium font-weight-bold pl-3" onClick={e => onMaxButtonClicked()}>MAX</span>
+                        <span className="text-primary label-medium font-weight-bold pl-3" onClick={() => onMaxButtonClicked()}>MAX</span>
                       </div>
                     </Col>
                   </Row>
@@ -241,9 +298,9 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <span className={dayOption === 1 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(1)}>30</span>
-                        <span className={dayOption === 2 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(2)}>60</span>
-                        <span className={dayOption === 3 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={e => setDayOption(3)}>90</span>
+                        <span className={dayOption === 1 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(1)}>30</span>
+                        <span className={dayOption === 2 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(2)}>60</span>
+                        <span className={dayOption === 3 ? 'cValue cValue-primary' : 'cValue cValue-light'} onClick={() => setDayOption(3)}>90</span>
                       </div>
                     </Col>
                   </Row>
@@ -255,7 +312,7 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <h5><span className="small text-primary font-weight-bold">$YOP</span><span className="pl-3 font-weight-normal">0</span></h5>
+                        <h5><span className="small text-primary font-weight-bold">$YOP</span><span className="pl-3 font-weight-normal">{rewardYop}</span></h5>
                       </div>
                     </Col>
                   </Row>
@@ -274,7 +331,7 @@ function Stake() {
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
-                        <h5><span className="pr-1 font-weight-normal small">View Contract on Etherscan</span>
+                        <h5><a href={`${getContractLink(networkId, contractAddresses['staking'][networkId])}`} rel="noreferrer" target="_blank" style={{ color: 'black', textDecoration: 'none'}} className="pr-1 font-weight-normal small">View Contract on Etherscan</a>
                           <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
                       </div>
                     </Col>
@@ -282,7 +339,7 @@ function Stake() {
                 </div>
                 <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300" disabled={!approvalCheck} onClick={e => onApproveAndStake()}>
+                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck} onClick={() => onApproveAndStake()}>
                     {
                       isApproved ? 'STAKE' : 'Approve'
                     }
@@ -293,9 +350,10 @@ function Stake() {
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <h5 className="text-white font-weight-normal">Transaction Pending...</h5>
+                    <h5 className="text-white font-weight-normal mb-5">{`${isApproved ? 'Stake' : 'Approve'} transaction pending...`}</h5>
+                    <img src={loader} className="transactionLoader" alt="loading..." />
                   </div>
-                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" target="_blank"><u>View Transaction on Etherscan</u></a>
+                  <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}
             </div>
           </Col>
@@ -304,19 +362,19 @@ function Stake() {
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Total Reward</h5>
-                  <p>{rewardPool ? rewardPool.toString() : '0'}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block ypBox__block--border">
                 <div className="yBoxSmall">
                   <h5>Reward Remaining</h5>
-                  <p>{rewardsOwed ? rewardsOwed.toString() : '0'}</p>
+                  <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
                 </div>
               </div>
               <div className="ypBox__block">
                 <div className="yBoxSmall">
                   <h5>TVL</h5>
-                  <p>{tvl ? tvl.toString() : '0'}</p>
+                  <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
                 </div>
               </div>
             </div>
