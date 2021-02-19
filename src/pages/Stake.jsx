@@ -51,7 +51,6 @@ function Stake() {
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
   console.log('stakerInfos', stakerInfos);
-  console.log('contractInfos', contractInfos);
 
   useEffect(() => {
     setTimeout(() => {
@@ -126,12 +125,12 @@ function Stake() {
         .stakeYOP(dayOption)
         .send({ from: address })
         .on('transactionHash', (hash) => {
-          console.log('hash', hash);
           setTxHash(hash);
         })
         .on('receipt', (result) => {
           console.log('result', result);
           setTxHash(null);
+          history.push('/processbaractive');
         })
         .on('error', (error) => {
           console.log('error', error);
@@ -351,7 +350,8 @@ function Stake() {
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <h5 className="text-white font-weight-normal">{`${isApproved ? 'Stake' : 'Approve'} transaction pending...`}</h5>
+                    <h5 className="text-white font-weight-normal mb-5">{`${isApproved ? 'Stake' : 'Approve'} transaction pending...`}</h5>
+                    <img src={loader} className="transactionLoader" alt="loading..." />
                   </div>
                   <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}

@@ -4,21 +4,35 @@ import {
   Container, Row, Col,
 } from 'reactstrap';
 import moment from 'moment';
-
+import { useHistory, useLocation } from "react-router-dom";
 import { yopTokenContract, stakingContract } from '../yop/contracts';
 import { formatDecimal, getRoundFigure, getHashLink } from '../yop/utils';
+import loader from '../assets/images/loader.gif';
+import useContractInfos from '../hooks/useContractInfos'
+import useStakerInfo from '../hooks/useStakerInfo'
 
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
 import Icon5 from '../assets/images/5.png';
 
-function StakeBarActive({
-  stakerInfos,
-  contractInfos,
-  handleStakeResult,
-  networkId,
-}) {
+
+function StakeBarActive() {
+
+  const history = useHistory();
+  const address = useSelector(state => state.authUser.address);
+  console.log('address', address);
+  const networkId = useSelector(state => state.authUser.networkId);
+
+  const stakerInfo = useStakerInfo(address);
   const [txHash, setTxHash] = useState('');
+  const [loading, setLoading] = useState(true);
+   const location = useLocation();
+  // TODO use me to show staking information
+  const stakerInfos = useStakerInfo(address);
+  console.log('stakerInfos', stakerInfos);
+  console.log('location', location);
+  // TODO use me to show contract information on the side
+  const contractInfos = useContractInfos();
 
   const {
     rewardsOwed,
@@ -35,8 +49,6 @@ function StakeBarActive({
     endOfStakeMillis,
   } = stakerInfos;
 
-  const address = useSelector(state => state.authUser.address);
-
   const progressCompleted = Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100);
 
   const onClaim = async () => {
@@ -46,10 +58,14 @@ function StakeBarActive({
       .on('transactionHash', (hash) => {
         console.log('hash', hash);
         setTxHash(hash);
-        handleStakeResult(hash);
       })
       .on('receipt', (result) => {
         console.log('result', result);
+        history.push({
+          pathname: '/processresult',
+          state: { txHash }
+        });
+      }, () => {
         setTxHash(null);
       })
       .on('error', (error) => {
@@ -109,7 +125,8 @@ function StakeBarActive({
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
-                    <h5 className="text-white font-weight-normal">Claim transaction pending...</h5>
+                    <h5 className="text-white font-weight-normal mb-5">Claim transaction pending...</h5>
+                    <img src={loader} className="transactionLoader" alt="loading..." />
                   </div>
                   <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}

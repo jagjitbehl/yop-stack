@@ -1,8 +1,9 @@
-import React,{Component} from 'react';
+import React, { useState } from 'react';
 import {
   Container, Row, Col, Button, Input
 } from 'reactstrap';
-
+import { useSelector } from 'react-redux';
+import { useHistory, useLocation } from "react-router-dom";
 import Icon1 from '../assets/images/1.png';
 import Icon2 from '../assets/images/2.png';
 import Icon3 from '../assets/images/3.png';
@@ -11,14 +12,23 @@ import IconLock from '../assets/images/lockIcon.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import inpuIcon from '../assets/images/purpleCircle.png';
+import useStakerInfo from '../hooks/useStakerInfo';
+import useContractInfos from '../hooks/useContractInfos';
 import { formatDecimal, getHashLink, getRoundFigure} from '../yop/utils';
 
-function StakeBarResult({
-  stakerInfos,
-  contractInfos,
-  stakeResultHash,
-  networkId,
-}) {
+function StakeBarResult(props) {
+  const history = useHistory();
+  const address = useSelector(state => state.authUser.address);
+  const networkId = useSelector(state => state.authUser.networkId);
+
+  const stakerInfo = useStakerInfo(address);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  // TODO use me to show staking information
+  const stakerInfos = useStakerInfo(address);
+  // TODO use me to show contract information on the side
+  const contractInfos = useContractInfos();
 
   const {
     rewardsOwed,
@@ -36,6 +46,7 @@ function StakeBarResult({
   } = stakerInfos;
 
   const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
+  const txHash = location.state && location.state.txHash ? location.state.txHash : null;
 
   return(
     <section className="innerSec stakeSec pt-md-0 pt-5">
@@ -124,8 +135,8 @@ function StakeBarResult({
                   <img className="mb-5" src={IconLock} />
                   <h4 className="text-white font-weight-normal"><span><strong>{getRoundFigure(formatDecimal(amount, 8))}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{getRoundFigure(formatDecimal(reward, 8))}</strong> $YOP Earned</span></h4>
                 </div>
-                {stakeResultHash &&
-                <a href={`${getHashLink(networkId, stakeResultHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
+                {txHash &&
+                <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 }
               </div>
             </div>

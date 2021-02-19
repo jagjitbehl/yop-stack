@@ -327,6 +327,12 @@ img{
   float :none;
 }
 
+.transactionLoader {
+  margin: auto;
+  float :none;
+  height: 90px;
+}
+
 .approve:disabled {
   background-color: grey;
   cursor: not-allowed;
