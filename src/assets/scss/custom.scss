@@ -263,6 +263,7 @@ img{
   line-height: 35px;
   text-align: center;
   @include font-size(0.875);
+  @include transition(all ease-in-out 350ms);
   &-light{
     background-color: $midGrey;
   }
@@ -310,6 +311,9 @@ img{
       border-right: 1px solid $primary-color;
       padding-right: 8px;
       padding-left: 0;
+      left: auto;
+      white-space: nowrap;
+      right: 0;
     }
   }
   .posLbott{
@@ -322,9 +326,20 @@ img{
   }
 }
 
-.loader {
-  margin: auto;
-  float :none;
+.siteLoader{
+  position: fixed;
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left:0;
+  top: 0;
+  background-color: rgba($primary-color, 0.8);
+  z-index: 999;
+  img{
+    width: 80px;
+  }
 }
 
 .transactionLoader {
@@ -337,10 +352,12 @@ img{
   background-color: grey;
   cursor: not-allowed;
   pointer-events: all !important;
+  border-color: transparent;
 }
 
 .unclaim:disabled {
   background-color: grey;
   cursor: not-allowed;
   pointer-events: all !important;
+  border-color: transparent;
 }
