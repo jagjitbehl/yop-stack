@@ -119,7 +119,7 @@ function StakeBarActive() {
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">
-                  <button className="btn btn-primary btn-mw300" onClick={() => onClaim()}>UNSTAKE & CLAIM REWARD</button>
+                  <button className="btn btn-primary btn-mw300 unclaim" disabled={progressCompleted < 100} onClick={() => onClaim()}>UNSTAKE & CLAIM REWARD</button>
                 </div>
               </div>
               {txHash ?

@@ -338,3 +338,9 @@ img{
   cursor: not-allowed;
   pointer-events: all !important;
 }
+
+.unclaim:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
