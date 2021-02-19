@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useHistory, useLocation } from "react-router-dom";
 import { yopTokenContract, stakingContract } from '../yop/contracts';
 import { formatDecimal, getRoundFigure, getHashLink } from '../yop/utils';
-import loader from '../assets/images/loader.gif';
+import transparentLoader from '../assets/images/transparentLoader.gif';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
 
@@ -126,7 +126,7 @@ function StakeBarActive() {
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">
                     <h5 className="text-white font-weight-normal mb-5">Claim transaction pending...</h5>
-                    <img src={loader} className="transactionLoader" alt="loading..." />
+                    <img src={transparentLoader} className="transactionLoader" alt="loading..." />
                   </div>
                   <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
                 </div> : ''}
