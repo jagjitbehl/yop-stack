@@ -13,18 +13,18 @@ import { yopTokenContract, stakingContract } from '../yop/contracts';
 import { formatDecimal, getHashLink, getContractLink, getRoundFigure } from '../yop/utils';
 import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
 import { contractAddresses } from '../yop/constants';
-
+import transparentLoader from '../assets/images/yop-loader-white.gif';
 import Icon1 from '../assets/images/1.jpg';
 import Icon2 from '../assets/images/2.jpg';
 import Icon3 from '../assets/images/3.jpg';
 import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
+import Icon5White from '../assets/images/5-white.png';
 import inpuIcon from '../assets/images/purpleCircle.png';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
 import StakeBarActive from './StakeBarActive';
 import loader from '../assets/images/loader.gif';
-import transparentLoader from '../assets/images/transparentLoader.gif';
 import StakeBarResult from './StakeBarResult';
 
 function Stake() {
@@ -190,7 +190,7 @@ function Stake() {
   if (loading) {
     return (
       <div  className="siteLoader">
-        <img src={loader} alt="loading..." />
+        <img src={transparentLoader} alt="loading..." />
       </div>
     )
   }
@@ -209,7 +209,7 @@ function Stake() {
                 <div className="btnWrap mb-md-0 mb-4">
                   <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
                   {/* <Link to="/token" className="btn btn-primary">Unlock Wallet</Link> */}
-                  <button className="btn btn-primary" onClick={() => onMetamaskConnect()}>Unlock Wallet</button>
+                  <button className="btn btn-primary unlock-wallet" onClick={() => onMetamaskConnect()}>Unlock Wallet</button>
                 </div>
               </div>
             </Col>
@@ -290,7 +290,7 @@ function Stake() {
                           <img src={inpuIcon} alt="" />
                           <Input type="number" value={stakeAmount} onChange={(e) => { setStakeAmount(e.target.value) }} disabled={isApproved} />
                         </div>
-                        <span className="text-primary label-medium font-weight-bold pl-3" onClick={() => onMaxButtonClicked()}>MAX</span>
+                        <span className="text-primary label-medium font-weight-bold pl-3 cursor-pointer" onClick={() => onMaxButtonClicked()}>MAX</span>
                       </div>
                     </Col>
                   </Row>
@@ -350,7 +350,6 @@ function Stake() {
                   </button>
                 </div>
               </div>
-
               {txHash ?
                 <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                   <div className="ypInnner flex-row">

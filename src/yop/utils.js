@@ -144,7 +144,6 @@ const getRoundFigure = (number) => {
 }
 
 const addCommas = (number) => {
-  console.log('number', number);
    let nStr = number.toString();
    nStr += '';
    const x = nStr.split('.');

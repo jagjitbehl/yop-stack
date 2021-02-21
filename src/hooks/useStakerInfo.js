@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { stakingContract } from '../yop/contracts';
 import BigNumber from 'bignumber.js'
 
-export default function useStakerInfo(address) {
+export default function useStakerInfo(address, progressValue) {
     const [stakerInfo, setStakerInfo] = useState({ hasStaked: false })
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function useStakerInfo(address) {
             }
         }
         fetchStakerInfo()
-    }, [setStakerInfo, address])
+    }, [setStakerInfo, address, progressValue])
 
     return stakerInfo;
 }

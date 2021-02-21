@@ -107,12 +107,12 @@ class App extends Component {
           <Route exact path="/">
             <Stake />
           </Route>
-          {/* <Route exact path="/token">
+          <Route exact path="/token">
             <StakeToken />
           </Route>
           <Route exact path="/process">
             <StakeTokenProcessing />
-          </Route> */}
+          </Route>
           <Route exact path="/processpending">
             <StakeTokenPending />
           </Route>

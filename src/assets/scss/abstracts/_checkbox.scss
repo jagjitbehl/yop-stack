@@ -19,7 +19,8 @@
       height: 10px;
       @include position(absolute, $top:4px, $left:4px);
       background-color: darken($midGrey, 10%);
-      content: '';      
+      content: '';
+      opacity: 0;      
     }
   }
   input[type="checkbox"]+&-label{
@@ -38,6 +39,7 @@
     }
     &:after{
       background-color: $primary-color;
+      opacity: 1;
     }
   }
 }
