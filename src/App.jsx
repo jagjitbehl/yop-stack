@@ -19,6 +19,8 @@ import StakeTokenPending from './pages/StakeTokenPending';
 import StakeBar from './pages/StakeBar';
 import StakeBarActive from './pages/StakeBarActive';
 import StakeBarResult from './pages/StakeBarResult';
+import StakeHomeScreen from './pages/StakeHomeScreen';
+import StakeVideo from './pages/StakeVideo';
 
 import { providerUrl, Web3, connector } from "./yop/web3";
 
@@ -107,6 +109,9 @@ class App extends Component {
           <Route exact path="/">
             <Stake />
           </Route>
+          <Route exact path="/stake">
+            <Stake />
+          </Route>
           <Route exact path="/token">
             <StakeToken />
           </Route>
@@ -124,6 +129,9 @@ class App extends Component {
           </Route>
           <Route exact path="/processresult">
             <StakeBarResult />
+          </Route>
+          <Route exact path="/stakevideo">
+            <StakeVideo />
           </Route>
         </Router>
         <NotificationContainer />

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import {
   Container, Row, Col,
 } from 'reactstrap';
+import { NotificationManager } from 'react-notifications';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
 import { useHistory, useLocation } from "react-router-dom";
 import { yopTokenContract, stakingContract } from '../yop/contracts';
@@ -14,6 +16,8 @@ import Icon5White from '../assets/images/5-white.png';
 import Icon1 from '../assets/images/1.png';
 import Icon3 from '../assets/images/3.png';
 import Icon5 from '../assets/images/5.png';
+import { RightSidebar } from './RightSidebar';
+import { UnicornBanner } from './UnicornBanner';
 
 
 function StakeBarActive() {
@@ -26,17 +30,9 @@ function StakeBarActive() {
   const [txHash, setTxHash] = useState(null);
   const [loading, setLoading] = useState(true);
   const [progressCompleted, setProgress] = useState(0);
-   const location = useLocation();
-  // TODO use me to show staking information
+  const location = useLocation();
   const stakerInfos = useStakerInfo(address, progressValue);
-  // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
-
-  const {
-    rewardsOwed,
-    rewardPool,
-    tvl,
-  } = contractInfos;
 
   const {
     amount,
@@ -66,6 +62,7 @@ function StakeBarActive() {
       })
       .on('error', (error) => {
         console.log('error', error);
+        NotificationManager.warning('Something went wrong while claiming. Please try again later');
         setTxHash(null);
       });
   }
@@ -85,12 +82,11 @@ function StakeBarActive() {
     }
   }, [stakerInfos]);
 
-  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
-
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
+          <UnicornBanner />
           <Col md="9" xs="12">
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">
@@ -143,28 +139,11 @@ function StakeBarActive() {
                 </div> : ''}
             </div>
           </Col>
-          <Col md="3" xs="12">
-            <div className="ypBox ypBox--rBlock text-center h-md-100">
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Total Reward</h5>
-                  <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
-                </div>
-              </div>
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Reward Remaining</h5>
-                  <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
-                </div>
-              </div>
-              <div className="ypBox__block">
-                <div className="yBoxSmall">
-                  <h5>TVL</h5>
-                  <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
-                </div>
-              </div>
-            </div>
-          </Col>
+          <RightSidebar 
+            stakerInfos={stakerInfo}
+            contractInfos={contractInfos}
+            networkId={networkId}
+          />
         </Row>
       </Container>
     </section>

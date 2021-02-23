@@ -5,9 +5,9 @@ import {
 } from 'reactstrap';
 import { NotificationManager } from 'react-notifications';
 import BigNumber from 'bignumber.js'
-
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import config from '../config';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { web3 } from '../yop/web3';
 import { yopTokenContract, stakingContract } from '../yop/contracts';
 import { formatDecimal, getHashLink, getContractLink, getRoundFigure } from '../yop/utils';
@@ -21,15 +21,22 @@ import Icon5 from '../assets/images/5.jpg';
 import pLogo from '../assets/images/pLogo.png';
 import Icon5White from '../assets/images/5-white.png';
 import inpuIcon from '../assets/images/purpleCircle.png';
+import ypGraph from '../assets/images/ypGraph.jpg';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
 import StakeBarActive from './StakeBarActive';
 import loader from '../assets/images/loader.gif';
 import StakeBarResult from './StakeBarResult';
+import { RightSidebar } from './RightSidebar';
+import { StakeHomeScreen } from './StakeHomeScreen';
+import { UnlockWallet } from './UnlockWallet';
+import { UnicornBanner } from './UnicornBanner';
+import StakeVideo from './StakeVideo';
 
 function Stake() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const address = useSelector(state => state.authUser.address);
   const networkId = useSelector(state => state.authUser.networkId);
 
@@ -55,7 +62,7 @@ function Stake() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false) 
-    }, 1000);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -175,17 +182,9 @@ function Stake() {
   }
 
   const {
-    rewardsOwed,
-    rewardPool,
-    tvl,
-  } = contractInfos;
-
-  const {
     rewardTaken,
     hasStaked,
   } = stakerInfos;
-
-  const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
 
   if (loading) {
     return (
@@ -197,51 +196,19 @@ function Stake() {
 
   if (!address || networkId !== config.networkId) {
     return (
-      <section className="innerSec stakeSec pt-md-0 pt-5">
-        <Container>
-          <Row>
-            <Col md="6" xs="12">
-              <div className="innerContent">
-                <div className="ypHead mb-5">
-                  <h2 className="text-primary">Staking Now Live!</h2>
-                  <p>Some pretty words here?</p>
-                </div>
-                <div className="btnWrap mb-md-0 mb-4">
-                  <span className="ypTags ypTags--outline-primary text-uppercase">Yop</span><br />
-                  {/* <Link to="/token" className="btn btn-primary">Unlock Wallet</Link> */}
-                  <button className="btn btn-primary unlock-wallet" onClick={() => onMetamaskConnect()}>Unlock Wallet</button>
-                </div>
-              </div>
-            </Col>
-            <Col md="6" xs="12">
-              <div className="gBox gBox--width gBox--padding">
-                <div className="gBox__head text-center pb-4">
-                  <h2 className="">Coming Soon</h2>
-                  <p>Other Multi Asset and Liquidity Pool Staking</p>
-                </div>
-                <Row>
-                  <Col md="6" xs="6" className="text-md-right text-center pb-4">
-                    <span className="ypTags">YOP / SUSHI</span>
-                  </Col>
-                  <Col md="6" xs="6" className="text-md-left text-center pb-4">
-                    <span className="ypTags">YOP / ETH LP</span>
-                  </Col>
-                  <Col md="6" xs="6" className="text-md-right text-center pb-md-0 pb-4">
-                    <span className="ypTags">YOP / COMP</span>
-                  </Col>
-                  <Col md="6" xs="6" className="text-md-left text-center pb-0">
-                    <span className="ypTags">YOP / USDC LP</span>
-                  </Col>
-                </Row>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <UnlockWallet 
+        onMetamaskConnect={onMetamaskConnect}
+      />
     )
   }
 
-  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
+  if (location.pathname !== '/stake' && isApproved === false && stakerInfos.hasStaked === false) {
+    return (
+      <StakeHomeScreen />
+    )
+  }
+
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === false && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
@@ -267,7 +234,8 @@ function Stake() {
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
-          <Col md="9" xs="12">
+          <UnicornBanner />
+          <Col md="9" xs="12">          
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">
                 <div className="ypHeadLeft" />
@@ -360,28 +328,11 @@ function Stake() {
                 </div> : ''}
             </div>
           </Col>
-          <Col md="3" xs="12">
-            <div className="ypBox ypBox--rBlock text-center h-md-100">
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Total Reward</h5>
-                  <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
-                </div>
-              </div>
-              <div className="ypBox__block ypBox__block--border">
-                <div className="yBoxSmall">
-                  <h5>Reward Remaining</h5>
-                  <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
-                </div>
-              </div>
-              <div className="ypBox__block">
-                <div className="yBoxSmall">
-                  <h5>TVL</h5>
-                  <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
-                </div>
-              </div>
-            </div>
-          </Col>
+          <RightSidebar 
+            stakerInfos={stakerInfo}
+            contractInfos={contractInfos}
+            networkId={networkId}
+          />
         </Row>
       </Container>
     </section>

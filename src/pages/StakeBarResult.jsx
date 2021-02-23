@@ -4,6 +4,7 @@ import {
 } from 'reactstrap';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Icon1 from '../assets/images/1.png';
 import Icon2 from '../assets/images/2.png';
 import Icon3 from '../assets/images/3.png';
@@ -15,6 +16,8 @@ import inpuIcon from '../assets/images/purpleCircle.png';
 import useStakerInfo from '../hooks/useStakerInfo';
 import useContractInfos from '../hooks/useContractInfos';
 import { formatDecimal, getHashLink, getRoundFigure} from '../yop/utils';
+import { RightSidebar } from './RightSidebar';
+import { UnicornBanner } from './UnicornBanner';
 
 function StakeBarResult(props) {
   const history = useHistory();
@@ -52,6 +55,7 @@ function StakeBarResult(props) {
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
+          <UnicornBanner />
           <Col md="9" xs="12">
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">
@@ -141,28 +145,11 @@ function StakeBarResult(props) {
               </div>
             </div>
           </Col>
-          <Col md="3" xs="12">
-            <div className="ypBox ypBox--rBlock text-center h-md-100">
-            <div className="ypBox__block ypBox__block--border">
-              <div className="yBoxSmall">
-                <h5>Total Reward</h5>
-                <p>{getRoundFigure(formatDecimal(rewardPool, 8))}</p>
-              </div>
-            </div>
-            <div className="ypBox__block ypBox__block--border">
-              <div className="yBoxSmall">
-                <h5>Reward Remaining</h5>
-                <p>{getRoundFigure(formatDecimal(rewardsRemaining, 8))}</p>
-              </div>
-            </div>
-            <div className="ypBox__block">
-              <div className="yBoxSmall">
-                <h5>TVL</h5>
-                <p>{getRoundFigure(formatDecimal(tvl, 8))}</p>
-              </div>
-            </div>
-            </div>
-          </Col>
+          <RightSidebar 
+            stakerInfos={stakerInfo}
+            contractInfos={contractInfos}
+            networkId={networkId}
+          />
         </Row>          
       </Container>
     </section>
