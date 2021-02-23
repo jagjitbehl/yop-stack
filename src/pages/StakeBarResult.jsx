@@ -18,6 +18,7 @@ import useContractInfos from '../hooks/useContractInfos';
 import { formatDecimal, getHashLink, getRoundFigure} from '../yop/utils';
 import { RightSidebar } from './RightSidebar';
 import { UnicornBanner } from './UnicornBanner';
+import StakeVideo from './StakeVideo';
 
 function StakeBarResult(props) {
   const history = useHistory();
@@ -32,6 +33,7 @@ function StakeBarResult(props) {
   const stakerInfos = useStakerInfo(address);
   // TODO use me to show contract information on the side
   const contractInfos = useContractInfos();
+  const [showVideo, setVideo] = useState(false);
 
   const {
     rewardsOwed,
@@ -51,11 +53,25 @@ function StakeBarResult(props) {
   const rewardsRemaining = rewardsOwed && rewardPool ? (rewardPool - rewardsOwed) : 0;
   const txHash = location.state && location.state.txHash ? location.state.txHash : null;
 
+  const handleBanner = (value) => {
+    setVideo(value);
+  }
+
+  if (showVideo === true) {
+    return (
+      <StakeVideo 
+        handleBanner={handleBanner}
+      />
+    )
+  }
+
   return(
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
-          <UnicornBanner />
+          <UnicornBanner 
+            handleBanner={handleBanner}
+          />
           <Col md="9" xs="12">
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">

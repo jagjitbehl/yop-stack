@@ -37,6 +37,7 @@ function Stake() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  console.log('location', location);
   const address = useSelector(state => state.authUser.address);
   const networkId = useSelector(state => state.authUser.networkId);
 
@@ -53,6 +54,7 @@ function Stake() {
   const [dayOption, setDayOption] = useState(1);
   const [loading, setLoading] = useState(true);
   const [rewardYop, setRewardYop] = useState(0);
+  const [showVideo, setVideo] = useState(false);
 
   // TODO use me to show staking information
   const stakerInfos = useStakerInfo(address);
@@ -62,7 +64,7 @@ function Stake() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false) 
-    }, 2000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -164,6 +166,7 @@ function Stake() {
         .on('receipt', (result) => {
           console.log(result);
           setIsApproved(true);
+          setApprovalCheck(false)
           setTxHash(null);
         })
         .on('error', (error) => {
@@ -196,19 +199,31 @@ function Stake() {
 
   if (!address || networkId !== config.networkId) {
     return (
-      <UnlockWallet 
+      <StakeHomeScreen 
         onMetamaskConnect={onMetamaskConnect}
       />
     )
   }
 
-  if (location.pathname !== '/stake' && isApproved === false && stakerInfos.hasStaked === false) {
+  const handleBanner = (value) => {
+    setVideo(value);
+  }
+
+  if (showVideo === true) {
     return (
-      <StakeHomeScreen />
+      <StakeVideo 
+        handleBanner={handleBanner}
+      />
     )
   }
 
-  if (stakerInfos.hasStaked && stakerInfos.hasStaked === false && rewardTaken == false) {
+  // if (location.pathname !== '/stake' && isApproved === false && stakerInfos.hasStaked === false) {
+  //   return (
+  //     <StakeHomeScreen />
+  //   )
+  // }
+
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
@@ -234,7 +249,9 @@ function Stake() {
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
-          <UnicornBanner />
+          <UnicornBanner 
+            handleBanner={handleBanner}
+          />
           <Col md="9" xs="12">          
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">
@@ -310,12 +327,16 @@ function Stake() {
                   </Row>
                 </div>
                 <div className="ypBox__bottom text-center">
+                <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck} onClick={() => onApproveAndStake()}>
-                    {
-                      isApproved ? 'STAKE' : 'Approve'
-                    }
+                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck || isApproved} onClick={() => onApproveAndStake()}>
+                    Approve
                   </button>
+                  <span className="div"/>
+                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck || !isApproved} onClick={() => onApproveAndStake()}>
+                    Stake
+                  </button>
+                </div>
                 </div>
               </div>
               {txHash ?

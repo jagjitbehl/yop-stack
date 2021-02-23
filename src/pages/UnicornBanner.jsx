@@ -3,15 +3,12 @@ import {
   Container, Row, Col, Input,
 } from 'reactstrap';
 import { useHistory, useLocation } from "react-router-dom";
-import circleIcon from '../assets/images/circleIcon.png';
-import unicorn from '../assets/images/unicorn.png';
+import circleIcon from '../assets/images/playUIconPrimary.png';
+import unicorn from '../assets/images/nUni_turn.png';
 
-export function UnicornBanner(){
-  const history = useHistory();
-  
-	const handleVideoLnk = () => {
-		history.push('/stakevideo');
-	}
+export function UnicornBanner({
+	handleBanner,
+}) {
 
 	return (
     <Col xs="12">
@@ -24,10 +21,10 @@ export function UnicornBanner(){
 	        <p>Don’t be afraid of being a crypto loving noob! Watch the video and learn how to earn!</p>
 	      </div>
 	      <div className="dvThree text-white">
-	        <p onClick={handleVideoLnk}><img width="30" src={circleIcon} alt="unicorn" className="circleIcon" /></p>
+	        <p onClick={() => handleBanner(true)}><img width="30" src={circleIcon} alt="unicorn" className="circleIcon" /></p>
 	      </div>
 	    </div>
 	  </div>
 	  </Col>
-		)
+	)
 }

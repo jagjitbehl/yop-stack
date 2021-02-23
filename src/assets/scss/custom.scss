@@ -195,6 +195,10 @@ img{
   position: relative;
   top: -3px;
 }
+.ypdIcon.pLogo{
+  width: 22px;
+  top:0;
+}
 
 //White Box
 .ypBox{
@@ -203,7 +207,7 @@ img{
   overflow: hidden;
   padding: 1.5rem;
   @include border-radius(10px);
-  @include box-shadow($left:0px, $top:0px, $blur:10px, $color:rgba(153, 0, 255, 0.3));
+  box-shadow: 0px 14px 8px rgba(124,0,255,0.1);
   &__head{
     display: flex;
     justify-content: space-between;
@@ -399,33 +403,42 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
   @include border-radius(10px);
 }
  .scWrap {
-  max-width: 750px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
   padding: 7rem 0;
   .scBlkIn__btn{
+    max-width:265px;
+    margin-left: auto;
+    margin-right: auto;
     a{
       color: #fff;
       border: 2px solid #fff;
-      padding: 1.5rem;
+      padding: 1rem 1.5rem;
       transition: all ease-in-out 350ms;
-      @include border-radius(10px);
+      @include border-radius(15px);
       display: inline-block;
       &:hover,
       .active{
         color: $primary-color;
         background-color: #fff;
         text-decoration: none;
-        box-shadow:0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow:0px 10px 11.5px rgba(40,37,37,0.25);
     }
   }
 }
 }
 .scBlkIn{
+  .hsImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 215px;
+    img{
+      margin-bottom: 1rem;
+    }
+  }
   img{
-    margin: 0 auto 2rem;
-    max-width: 150px;
-    display: block;
     &.w250{
       max-width: 300px;
     }
@@ -442,7 +455,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
 }
 .notiWrap{
   color: #fff;
-  padding: 15px 10px;
+  padding: 10px;
   p{
     margin-bottom: 0;
     color: #fff;
@@ -451,11 +464,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     padding-left: 110px;
   }
   .uIcon{
-    width: 100px;
+    width: 80px;
     position: absolute;
     top: -14px;
     left: 30px;
-    height: 80px;
   }
 }
 
@@ -465,6 +477,61 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
   margin: auto;
 }
 
+.stake-active {
+  .recharts-responsive-container {
+    height: 100% !important;
+    width: 100% !important;
+    margin: auto;
+    max-width: 127px;
+    max-height: 79px;
+  }
+}
 .recharts-xAxis {
   font-size: 7px; 
+}
+
+.scVdo{
+  iframe{
+  width: 100%;
+  min-height: 480px;
+  float: left;
+  }
+}
+
+.vdoModal{
+  .modal-dialog{
+    max-width: 1000px;
+    margin-top: 6rem;
+  }
+  .modal-body{
+    padding: 0;
+  }
+  .modal-content{
+    border: none;
+    background-color: transparent;
+    border-radius: 15px;
+  }
+}
+.modal-backdrop.show{
+  opacity: 0.9;
+}
+
+.div {
+  border-top: 1px solid $primary-color;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  width: 100px;
+  border-color: grey;
+}
+button.mdlBtn{
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    background: #ccc;
+    z-index: 99;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #ccc; 
 }

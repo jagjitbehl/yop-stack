@@ -18,6 +18,7 @@ import Icon3 from '../assets/images/3.png';
 import Icon5 from '../assets/images/5.png';
 import { RightSidebar } from './RightSidebar';
 import { UnicornBanner } from './UnicornBanner';
+import StakeVideo from './StakeVideo';
 
 
 function StakeBarActive() {
@@ -33,6 +34,7 @@ function StakeBarActive() {
   const location = useLocation();
   const stakerInfos = useStakerInfo(address, progressValue);
   const contractInfos = useContractInfos();
+  const [showVideo, setVideo] = useState(false);
 
   const {
     amount,
@@ -82,11 +84,25 @@ function StakeBarActive() {
     }
   }, [stakerInfos]);
 
+  const handleBanner = (value) => {
+    setVideo(value);
+  }
+
+  if (showVideo === true) {
+    return (
+      <StakeVideo 
+        handleBanner={handleBanner}
+      />
+    )
+  }
+
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
         <Row className="align-items-stretch">
-          <UnicornBanner />
+          <UnicornBanner 
+            handleBanner={handleBanner}
+          />
           <Col md="9" xs="12">
             <div className="ypBox">
               <div className="ypBox__head ypBox__head--border text-center">
@@ -143,6 +159,7 @@ function StakeBarActive() {
             stakerInfos={stakerInfo}
             contractInfos={contractInfos}
             networkId={networkId}
+            className="stake-active"
           />
         </Row>
       </Container>

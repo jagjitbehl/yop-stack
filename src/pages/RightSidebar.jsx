@@ -45,6 +45,7 @@ const data = [
 export function RightSidebar({
 	stakerInfos,
 	contractInfos,
+  className,
 }) {
 
   const {
@@ -82,7 +83,7 @@ export function RightSidebar({
 	        </div>
 	      </div>
 	      <div className="ypBox__blockmb-0">
-	        <div className="graph">
+	        <div className={`graph ${className || ''}`}>
 	        <ResponsiveContainer width='100%' aspect={4.0/3.0}>
 	          <LineChart
               data={data}
