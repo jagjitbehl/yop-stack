@@ -160,12 +160,28 @@ img{
   padding: 0.5rem;
   background-color: $midGrey;
   @include border-radius(10px);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
   &--width{
     margin-left: auto;
     margin-right: auto;
   }
   &--padding{
-    padding: 30px;
+    padding: 71px 30px;
+  }
+  &__helper{
+    background-color: $primary-color;
+    opacity: 0;
+    visibility: hidden;
+    @include position(absolute, $top:0, $left:0, $right:0, $bottom:0);
+    @include transition(all ease-in-out 350ms);
+  }
+  &:hover{
+    .gBox__helper{
+      opacity: 0.7;
+      visibility: visible;
+    }
   }
 }
 
@@ -427,6 +443,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     }
   }
 }
+}
+.btntCol {
+  color: $primary-color;
+  border: 2px solid $primary-color;
+  background-color: #fff;
+  padding: 1rem 0.5rem;
+  transition: all ease-in-out 350ms;
+  @include border-radius(15px);
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  img{
+    width: 40px;
+    margin-right: 12px;
+    /*box-shadow:0px 10px 11.5px rgba(40,37,37,0.25);*/
+  }
+  &:hover,
+  .active{
+    color: #fff;
+    background-color: $primary-color;
+    text-decoration: none;
+    box-shadow:0px 10px 11.5px rgba(40,37,37,0.25);
+  }
 }
 .scBlkIn{
   .hsImg{

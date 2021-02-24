@@ -8,6 +8,9 @@
   &-mw300{
     width: 100%;
     max-width: 300px;
+    @media screen and (max-width: 1400px){
+    max-width: 250px;
+    }
   }
   &-primary{
     background-color: $primary-color;

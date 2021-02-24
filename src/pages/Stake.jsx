@@ -36,8 +36,6 @@ import StakeVideo from './StakeVideo';
 function Stake() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
-  console.log('location', location);
   const address = useSelector(state => state.authUser.address);
   const networkId = useSelector(state => state.authUser.networkId);
 
@@ -166,7 +164,6 @@ function Stake() {
         .on('receipt', (result) => {
           console.log(result);
           setIsApproved(true);
-          setApprovalCheck(false)
           setTxHash(null);
         })
         .on('error', (error) => {
@@ -199,7 +196,7 @@ function Stake() {
 
   if (!address || networkId !== config.networkId) {
     return (
-      <StakeHomeScreen 
+      <UnlockWallet 
         onMetamaskConnect={onMetamaskConnect}
       />
     )
@@ -223,7 +220,7 @@ function Stake() {
   //   )
   // }
 
-  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === false && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
@@ -234,7 +231,7 @@ function Stake() {
     );
   }
 
-  if (rewardTaken === true) {
+  if (rewardTaken === false) {
     return (
       <StakeBarResult 
         stakerInfos={stakerInfo}
@@ -311,7 +308,7 @@ function Stake() {
                     <Col md="8" xs="12">
                       <div className="ypLeft d-flex">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" value={approvalCheck} onChange={handleCheckbox} id="flexCheckDefault" />
+                          <input className="form-check-input" type="checkbox" value={approvalCheck} checked={approvalCheck} onChange={handleCheckbox} id="flexCheckDefault" />
                           <label className="form-check-label" htmlFor="flexCheckDefault">
                             <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
                           </label>
