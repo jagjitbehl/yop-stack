@@ -220,7 +220,7 @@ function Stake() {
   //   )
   // }
 
-  if (stakerInfos.hasStaked && stakerInfos.hasStaked === false && rewardTaken == false) {
+  if (stakerInfos.hasStaked && stakerInfos.hasStaked === true && rewardTaken == false) {
     return (
       <StakeBarActive
         stakerInfos={stakerInfo}
@@ -231,7 +231,7 @@ function Stake() {
     );
   }
 
-  if (rewardTaken === false) {
+  if (rewardTaken === true) {
     return (
       <StakeBarResult 
         stakerInfos={stakerInfo}
