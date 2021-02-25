@@ -613,3 +613,13 @@ button.mdlBtn{
     height: 30px;
     background-color: #ccc; 
 }
+
+.module-border-wrap {
+  max-width: 202px;
+  position: relative;
+  background: linear-gradient(to right, red, orange);
+  padding: 1.5px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-left: 1rem;
+}

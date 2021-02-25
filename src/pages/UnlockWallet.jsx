@@ -31,7 +31,9 @@ export function UnlockWallet({
               </div>
               <div className="d-block mb-4">
                 <span className="ypTags ypTags--outline-primary">YOP Single Asset</span>
-                <span className="ypTags ypTags--outline-golden ml-3"><img src={star} alt="Start" className="mr-1 icon-12" style={{ position: 'relative', top: '-3px'}} />1 Million $YOP Reward</span>
+                <div className="module-border-wrap">
+                  <span className="ypTags ypTags--outline-golden"><img src={star} alt="Start" className="mr-1 icon-12" style={{ position: 'relative', top: '-3px'}} />1 Million $YOP Reward</span>
+                </div>
               </div>
               <div className="btnWrap mb-md-0 mb-4">
                 <Row>

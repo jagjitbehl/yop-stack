@@ -12,11 +12,13 @@
     background-color: transparent;
     color: $secondary-color;
   }
+
   &--outline-golden{
     background-color: #fff;
     position: relative;
     border-color: #FFF;
-    color: $secondary-color; 
+    color: $secondary-color;
+    padding: 5px 6px;
     &:before{
       content: "";
       position: absolute;
@@ -26,8 +28,6 @@
       left: 0;
       z-index: -1;
       margin: -3px;
-      border-radius: inherit;
-      background: linear-gradient(to right, red, orange);
     }
   }
 }
