@@ -13,6 +13,7 @@ import Header from './components/Header';
 import Stake from './pages/Stake';
 import './App.scss';
 import pTopImg from './assets/images/dot-bg-white-upper-left.png';
+import backgroundImage from './assets/images/background-dots.gif';
 import StakeToken from './pages/StakeToken';
 import StakeTokenProcessing from './pages/StakeTokenProcessing';
 import StakeTokenPending from './pages/StakeTokenPending';
@@ -23,6 +24,13 @@ import StakeHomeScreen from './pages/StakeHomeScreen';
 import StakeVideo from './pages/StakeVideo';
 
 import { providerUrl, Web3, connector } from "./yop/web3";
+
+const backGroundStyle = {
+  backgroundRepeat: "no-repeat",
+  backgroundImage: `url(${backgroundImage})`,
+  backGroundSize: "100%",
+  backGroundPosition: "center center",
+}
 
 class App extends Component {
   constructor(props) {
@@ -99,12 +107,12 @@ class App extends Component {
     }
   };
 
+
+
   render() {
     return (
-      <div className="mainWrap">
+      <div className="mainWrap" style={backGroundStyle}>
         <Header />
-        <img className="pTopImg" src={pTopImg} alt="Top Image" />
-        <img className="pBottImg" src={pTopImg} alt="Bottom Image" />
         <Router>
           <Route exact path="/">
             <Stake />

@@ -1,5 +1,6 @@
 const { web3, connector } = require('./web3');
 const BigNumber = require('bignumber.js');
+import moment from 'moment';
 
 const sendTransaction = async (connectType, fromAddress, toAddress, encodedABI, /*gasLimit,*/ wei = `0x0`) => {
   if (connectType === 'metamask') {
@@ -157,6 +158,12 @@ const addCommas = (number) => {
    return x1 + x2;
 }
 
+const formatDate = (date) => {
+  const momentDate = moment(date).format('Do MMMM YYYY');
+  const newdate = momentDate.replace( /(\d)(st|nd|rd|th)/g, '$1<sup>$2</sup>' );
+  return newdate;
+}
+
 export {
   sendTransaction,
   bnToDec,
@@ -168,4 +175,5 @@ export {
   getHashLink,
   getContractLink,
   getRoundFigure,
+  formatDate,
 };

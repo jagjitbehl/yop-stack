@@ -5,17 +5,21 @@ import {
 } from 'reactstrap';
 import { NotificationManager } from 'react-notifications';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import moment from 'moment';
 import { useHistory, useLocation } from "react-router-dom";
 import { yopTokenContract, stakingContract } from '../yop/contracts';
-import { formatDecimal, getRoundFigure, getHashLink } from '../yop/utils';
+import {
+ formatDecimal,
+ getRoundFigure,
+ getHashLink,
+ formatDate,
+} from '../yop/utils';
 import transparentLoader from '../assets/images/yop-loader-white.gif';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
 import Icon5White from '../assets/images/5-white.png';
-import Icon1 from '../assets/images/1.png';
-import Icon3 from '../assets/images/3.png';
-import Icon5 from '../assets/images/5.png';
+import Icon1 from '../assets/Icons/stake-amount.svg';
+import Icon3 from '../assets/Icons/reward.svg';
+import Icon5 from '../assets/Icons/stake-token.svg';
 import { RightSidebar } from './RightSidebar';
 import { UnicornBanner } from './UnicornBanner';
 import StakeVideo from './StakeVideo';
@@ -29,8 +33,9 @@ function StakeBarActive() {
   let progressValue = 0;
   const stakerInfo = useStakerInfo(address, progressValue);
   const [txHash, setTxHash] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [progressCompleted, setProgress] = useState(0);
+  const [rewardsEarned, setRewardsEarned] = useState(0);
   const location = useLocation();
   const stakerInfos = useStakerInfo(address, progressValue);
   const contractInfos = useContractInfos();
@@ -55,9 +60,10 @@ function StakeBarActive() {
       })
       .on('receipt', (result) => {
         console.log('result', result);
+        const { transactionHash } = result;
         history.push({
           pathname: '/processresult',
-          state: { txHash }
+          state: { txHash: transactionHash },
         });
       }, () => {
         setTxHash(null);
@@ -75,11 +81,13 @@ function StakeBarActive() {
       dataReceived = true;
       const interval = setInterval(() => {
         progressValue = progressValue + 1;
-        setProgress(Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100));
-        console.log()
-        if (Date.now() >= endOfStakeMillis) {
+        const newProgress = Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100);
+        const rewardsEarned = newProgress <= 100 ? ((newProgress * reward) / 100) : reward;
+        setProgress(newProgress - 20);
+        setRewardsEarned(rewardsEarned);
+        if (Date.now() >= endOfStakeMillis && newProgress > 120) {
           clearInterval(interval);
-        }  
+        }
       }, 2000);
     }
   }, [stakerInfos]);
@@ -96,6 +104,14 @@ function StakeBarActive() {
     )
   }
 
+  if (loading) {
+    return (
+      <div  className="siteLoader">
+        <img src={transparentLoader} alt="loading..." />
+      </div>
+    )
+  }
+
   return (
     <section className="innerSec stakeSec pt-md-0 pt-5">
       <Container>
@@ -108,7 +124,7 @@ function StakeBarActive() {
               <div className="ypBox__head ypBox__head--border text-center">
                 <div className="ypHeadLeft" />
                 <div className="ypHeading">
-                  <h3><img className="ypdIcon" src={Icon5} /> Stake Token</h3>
+                  <h3><img className="ypdIcon" src={Icon5} /> Staking</h3>
                 </div>
                 <div className="ypHeadRight" />
               </div>
@@ -125,7 +141,7 @@ function StakeBarActive() {
                     <Col md="6" xs="12">
                       <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
                         <img className="ypdIcon" src={Icon3} />
-                        <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
+                        <span className="label-medium font-weight-medium pl-1">Rewards Earned</span>
                         <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`+${getRoundFigure(formatDecimal(reward, 8))}`} $YOP</span>
                       </div>
                     </Col>
@@ -133,12 +149,23 @@ function StakeBarActive() {
                 </div>
                 <div className="ypBox__block">
                   <div className="progressWrap my-5">
-                    <span className="posLtop posLtop--end" style={{ right: '7px'}}><span className="text-success label-medium">Staking Complete</span></span>
+                    {progressCompleted < 80 ?
+                      <span className="posLtop" style={{ left: `${progressCompleted <=0 ? 1 : (progressCompleted - 1)}%`}}>
+                        <span className="text-success label-medium">{`+${formatDecimal(rewardsEarned, 8)} $YOP`}</span>
+                        <span className="d-block label-small font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span>
+                      </span> :
+                      <span className="posLtop posLtop--end" style={{ right: `${progressCompleted < 100 ? ((100 - progressCompleted) + 1) : 1}%`}}>
+                        <span className="text-success label-medium">{`${progressCompleted < 100 ? (`+${formatDecimal(rewardsEarned, 8)} $YOP`) : 'Staking Complete'}`}</span>
+                        {progressCompleted < 100 &&
+                          <span className="d-block label-small font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span>
+                        }
+                      </span>
+                    }
                     <div className="progress">
                       <div className="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style={{ width: `${progressCompleted}%` }}></div>
                     </div>
-                    <span className="posLbott"><span className="d-block label-small font-weight-medium">Claim Rewards On</span><span className="d-block text-primary font-weight-medium">{moment(startOfStake).format('Do MMMM YYYY')}</span></span>
-                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">Claim Rewards Ends</span><span className="d-block text-primary  font-weight-medium">{moment(endOfStake).format('Do MMMM YYYY')}</span></span>
+                    <span className="posLbott"><span className="d-block label-small font-weight-medium">Staked On</span><span className="d-block text-primary font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span></span>
+                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">Claim Reward On</span><span className="d-block text-primary  font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">

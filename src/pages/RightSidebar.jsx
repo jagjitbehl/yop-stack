@@ -21,24 +21,28 @@ import {
 
 const data = [
   {
-    "name": "0",
     "pv": 0,
     "amt": 0
   },
   {
-    "name": "1398",
-    "pv": 1398,
-    "amt": 2210
+    "pv": 5,
+    "amt": 5
   },
   {
-    "name": "3000",
-    "pv": 3000,
-    "amt": 3000
+    "pv": 8,
+    "amt": 8
   },
   {
-    "name": "2000",
-    "pv": 2000,
-    "amt": 2000
+    "pv": 15,
+    "amt": 15
+  },
+  {
+    "pv": 15,
+    "amt": 15
+  },
+  {
+    "pv": 20,
+    "amt": 20
   },
 ];
 
@@ -88,8 +92,8 @@ export function RightSidebar({
 	          <LineChart
               data={data}
               margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-	            <XAxis dataKey="name" />
-	            <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+	            <XAxis dataKey="name" tick={false} stroke="#cccccc" />
+	            <Line type="monotone" dataKey="pv" stroke="#9900FF" dot={false} />
 	          </LineChart>
 	        </ResponsiveContainer>
 	        </div>

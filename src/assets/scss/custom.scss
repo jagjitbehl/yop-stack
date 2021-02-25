@@ -48,6 +48,10 @@ h6{
   @include font-size(0.875);
 }
 
+.label-sub{
+  @include font-size(0.73);
+}
+
 .label-small{
   @include font-size(0.63);
 }
@@ -77,11 +81,29 @@ a,.btn,button,input[type="submit"]{
 img{
   max-width: 100%;
 }
+.icon-50{
+  width:50px;
+}
+.icon-40{
+  width:40px;
+}
+.icon-30{
+  width:30px;
+}
+.icon-20{
+  width:20px;
+}
+
+.icon-12{
+  width:12px;
+}
+
 .inputIcon{
   position: relative;
   img{
     @include position(absolute, $top:8px, $left:10px);
     width: 20px;
+    color: #9900ff;
   }
   input{
     padding-left: 35px;
@@ -205,7 +227,7 @@ img{
 }
 
 .ypdIcon{
-  width: 16px;
+  width: 20px;
   margin-right: 3px;
   vertical-align: middle;
   position: relative;
@@ -222,7 +244,7 @@ img{
   background-color: #fff;
   overflow: hidden;
   padding: 1.5rem;
-  @include border-radius(10px);
+  @include border-radius(30px);
   box-shadow: 0px 14px 8px rgba(124,0,255,0.1);
   &__head{
     display: flex;
@@ -232,11 +254,15 @@ img{
       border-bottom: 1px solid $border-color;
       padding-bottom: 0.5rem;
     }
+    &>div{
+      flex: 0 0 33.33%;
+    }
     .ypHeadRight{
       justify-self: flex-end;
+      text-align: right;
     }
     h3{
-     @include font-size(0.875);
+     @include font-size(1);
     }
   }
   &__block{
@@ -341,13 +367,13 @@ img{
   padding: 50px 0 40px;
   .posLtop{
     @include position(absolute, $top: 0,);
-    border-left: 1px solid $primary-color;
+    border-left: 2px solid $primary-color;
     height: 50px;
     padding-left: 8px;
     line-height: 1.3;
     &--end{
       border-left: none;
-      border-right: 1px solid $primary-color;
+      border-right: 2px solid $primary-color;
       padding-right: 8px;
       padding-left: 0;
       left: auto;
@@ -387,23 +413,25 @@ img{
 }
 
 .approve:disabled {
-  background-color: grey;
+  background-color: #cccccc;
   cursor: not-allowed;
   pointer-events: all !important;
   border-color: transparent;
 }
 
 .unclaim:disabled {
-  background-color: grey;
+  background-color: #cccccc;
   cursor: not-allowed;
   pointer-events: all !important;
   border-color: transparent;
 }
 
 .unlock-wallet {
-  -webkit-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+/*  -webkit-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 2px 5px rgba(0,0,0,0.2);*/
+  &:hover {
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  }
 }
 
 
@@ -456,7 +484,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
   align-items: center;
   text-align: left;
   img{
-    width: 40px;
+    width: 50px;
     margin-right: 12px;
     /*box-shadow:0px 10px 11.5px rgba(40,37,37,0.25);*/
   }
@@ -504,16 +532,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     padding-left: 110px;
   }
   .uIcon{
-    width: 80px;
+    width: 75px;
     position: absolute;
-    top: -14px;
+    top: -13px;
     left: 30px;
   }
 }
 
 .recharts-responsive-container {
   height: 63px !important;
-  width: 127px !important;
+  width: 145px !important;
   margin: auto;
 }
 
@@ -526,6 +554,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     max-height: 79px;
   }
 }
+
+.stake-result {
+  .recharts-responsive-container {
+    height: 100% !important;
+    width: 100% !important;
+    margin: auto;
+    max-width: 127px;
+    max-height: 80px;
+  }
+}
+
 .recharts-xAxis {
   font-size: 7px; 
 }
@@ -560,9 +599,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
   border-top: 1px solid $primary-color;
   display: inline-block;
   position: relative;
-  top: 3px;
   width: 100px;
-  border-color: grey;
+  border-color: #cccccc;
 }
 button.mdlBtn{
     position: absolute;

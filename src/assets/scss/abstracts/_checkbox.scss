@@ -11,14 +11,14 @@
       width: 18px;
       height: 18px;
       @include position(absolute, $top:0, $left:0);
-      border: 1px solid darken($midGrey, 10%);
+      border: 2px solid #333;
       content: '';      
     }
     &:after{
       width: 10px;
       height: 10px;
       @include position(absolute, $top:4px, $left:4px);
-      background-color: darken($midGrey, 10%);
+      background-color: #333;
       content: '';
       opacity: 0;      
     }

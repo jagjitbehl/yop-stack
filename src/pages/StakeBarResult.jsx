@@ -3,19 +3,18 @@ import {
   Container, Row, Col, Button, Input
 } from 'reactstrap';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 import { useHistory, useLocation } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import Icon1 from '../assets/images/1.png';
-import Icon2 from '../assets/images/2.png';
-import Icon3 from '../assets/images/3.png';
-import Icon5 from '../assets/images/5.png';
+import Icon1 from '../assets/Icons/stake-amount.svg';
+import Icon3 from '../assets/Icons/reward.svg';
+import Icon5 from '../assets/Icons/stake-token.svg';
 import IconLock from '../assets/images/lockIcon.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
-import inpuIcon from '../assets/images/purpleCircle.png';
 import useStakerInfo from '../hooks/useStakerInfo';
 import useContractInfos from '../hooks/useContractInfos';
-import { formatDecimal, getHashLink, getRoundFigure} from '../yop/utils';
+import { formatDecimal, getHashLink, getRoundFigure, formatDate} from '../yop/utils';
 import { RightSidebar } from './RightSidebar';
 import { UnicornBanner } from './UnicornBanner';
 import StakeVideo from './StakeVideo';
@@ -77,7 +76,7 @@ function StakeBarResult(props) {
               <div className="ypBox__head ypBox__head--border text-center">
                 <div className="ypHeadLeft" />
                 <div className="ypHeading">
-                  <h3><img className="ypdIcon" src={Icon5} /> Stake Token</h3>
+                  <h3><img className="ypdIcon" src={Icon5} />Staking</h3>
                 </div>
                 <div className="ypHeadRight">
                   <span className="text-muted label-medium">Available $YOP Balance <span className="pl-1 text-secondary">750,000.00</span></span>
@@ -86,74 +85,41 @@ function StakeBarResult(props) {
               <div className="ypBox__content">
                 <div className="ypBox__block">
                   <Row>
-                    <Col md="8" xs="12">
-                      <div className="ypLeft"><img className="ypdIcon" src={Icon1} /> Stake Amount</div>
+                    <Col md="6" xs="12">
+                      <div className="ypLeft d-flex align-items-center">
+                        <img className="ypdIcon mr-2" src={Icon1} /> <span className="label-medium font-weight-medium">Stake Amount</span>
+                        <span className="label-medium font-weight-medium text-primary pl-3">1,234.12345678 </span>
+                        <span className="label-medium font-weight-medium text-primary pl-3">$YOP</span>
+                      </div>
                     </Col>
-                    <Col md="4" xs="12">
-                      <div className="ypRight ypRight--icon d-flex align-items-center">
-                        <div className="inputIcon">
-                          <img src={inpuIcon} alt="" />
-                          <Input type="text" />
-                        </div>
-                        <span className="text-primary label-medium font-weight-bold pl-3">MAX</span>
+                    <Col md="6" xs="12">
+                      <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
+                        <img className="ypdIcon" src={Icon3} /> 
+                        <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
+                        <span className="label-medium font-weight-medium text-success mb-0 pl-3">+0.0235 $YOP</span>
                       </div>
                     </Col>
                   </Row>
                 </div>
                 <div className="ypBox__block">
-                  <Row>
-                    <Col md="8" xs="12">
-                      <div className="ypLeft"><img className="ypdIcon" src={Icon2} /> Stake Period <span className="small">(Days)</span></div>
-                    </Col>
-                    <Col md="4" xs="12">
-                      <div className="ypRight text-right">
-                        <span className="cValue cValue-primary">30</span>
-                        <span className="cValue cValue-light">60</span>
-                        <span className="cValue cValue-light">90</span>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="ypBox__block">
-                  <Row>
-                    <Col md="8" xs="12">
-                      <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> Reward <span className="small">(Potential earning at the end of stake period)</span></div>
-                    </Col>
-                    <Col md="4" xs="12">
-                      <div className="ypRight text-right">
-                        <h5><span className="small text-primary font-weight-bold">$YOP</span><span className="pl-3 font-weight-normal">0</span></h5>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="ypBox__block">
-                  <Row>
-                    <Col md="8" xs="12">
-                      <div className="ypLeft d-flex">
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                          <label className="form-check-label" htmlFor="flexCheckDefault">
-                            <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
-                          </label>
-                        </div>
-                        </div>
-                    </Col>
-                    <Col md="4" xs="12">
-                      <div className="ypRight text-right">
-                        <h5><span className="pr-1 font-weight-normal small">View Contract on Etherscan</span>
-                        <img className="pLogo ypdIcon" src={pLogo} alt="ypdIcon" /></h5>
-                      </div>
-                    </Col>
-                  </Row>
+                  <div className="progressWrap my-5">
+                    <span className="posLtop" style={{ left: '4%'}}><span className="text-success label-medium">+0.0235 $YOP</span><span className="d-block label-small font-weight-medium">4th February 2021</span></span>
+                    <div className="progress">
+                      <div className="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '5%'}}></div>
+                    </div>
+                    <span className="posLbott"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary font-weight-medium">1st February 2021</span></span>
+                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary  font-weight-medium">1st March 2021</span></span>
+                  </div>
                 </div>
                 <div className="ypBox__bottom text-center">
-                  <Button color="secondary" disabled className="btn-mw300">STAKE</Button>
+                  <a href="/processbaractive" className="btn btn-primary btn-mw300">UNSTAKE & CLAIM REWARD</a>
                 </div>
               </div>
               <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                 <div className="ypInnner flex-row">
                   <img className="mb-5" src={IconLock} />
-                  <h4 className="text-white font-weight-normal"><span><strong>{getRoundFigure(formatDecimal(amount, 8))}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{getRoundFigure(formatDecimal(reward, 8))}</strong> $YOP Earned</span></h4>
+                  <h4 className="text-white font-weight-normal mb-4"><span><strong>{getRoundFigure(formatDecimal(amount, 8))}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{getRoundFigure(formatDecimal(reward, 8))}</strong> $YOP Earned</span></h4>
+                  <span className="text-white font-weight-normal label-sub"><span><strong>Staked On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span><span className="px-4">|</span><span><strong>Claim Reward On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
                 </div>
                 {txHash &&
                 <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>
@@ -165,6 +131,7 @@ function StakeBarResult(props) {
             stakerInfos={stakerInfo}
             contractInfos={contractInfos}
             networkId={networkId}
+            className="stake-result"
           />
         </Row>          
       </Container>

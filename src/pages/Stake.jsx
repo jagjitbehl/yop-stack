@@ -14,13 +14,13 @@ import { formatDecimal, getHashLink, getContractLink, getRoundFigure } from '../
 import { setAddress, setNetworkId, setConnectType } from "../redux/actions";
 import { contractAddresses } from '../yop/constants';
 import transparentLoader from '../assets/images/yop-loader-white.gif';
-import Icon1 from '../assets/images/1.jpg';
-import Icon2 from '../assets/images/2.jpg';
-import Icon3 from '../assets/images/3.jpg';
-import Icon5 from '../assets/images/5.jpg';
+import Icon1 from '../assets/Icons/stake-amount.svg';
+import Icon2 from '../assets/Icons/stake-period.svg';
+import Icon3 from '../assets/Icons/reward.svg';
+import Icon5 from '../assets/Icons/stake-token.svg';
 import pLogo from '../assets/images/pLogo.png';
 import Icon5White from '../assets/images/5-white.png';
-import inpuIcon from '../assets/images/purpleCircle.png';
+import inpuIcon from '../assets/Icons/amount-field-logo.svg';
 import ypGraph from '../assets/images/ypGraph.jpg';
 import useContractInfos from '../hooks/useContractInfos'
 import useStakerInfo from '../hooks/useStakerInfo'
@@ -254,7 +254,7 @@ function Stake() {
               <div className="ypBox__head ypBox__head--border text-center">
                 <div className="ypHeadLeft" />
                 <div className="ypHeading">
-                  <h3><img className="ypdIcon" src={Icon5} /> Stake Token</h3>
+                  <h3><img className="ypdIcon" src={Icon5} />Staking</h3>
                 </div>
                 <div className="ypHeadRight">
                   <span className="text-muted label-medium">Available $YOP Balance <span className="pl-1 text-secondary">{formatDecimal(yopBalance, 8)}</span></span>
@@ -269,7 +269,7 @@ function Stake() {
                     <Col md="4" xs="12">
                       <div className="ypRight ypRight--icon d-flex align-items-center">
                         <div className="inputIcon">
-                          <img src={inpuIcon} alt="" />
+                          <img src={inpuIcon} alt="" className="inpuIcon icon-20" />
                           <Input type="number" value={stakeAmount} onChange={(e) => { setStakeAmount(e.target.value) }} disabled={isApproved} />
                         </div>
                         <span className="text-primary label-medium font-weight-bold pl-3 cursor-pointer" onClick={() => onMaxButtonClicked()}>MAX</span>
@@ -294,7 +294,7 @@ function Stake() {
                 <div className="ypBox__block">
                   <Row>
                     <Col md="8" xs="12">
-                      <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> Reward <span className="small">(Potential earning at the end of stake period)</span></div>
+                      <div className="ypLeft"><img className="ypdIcon" src={Icon3} /> Reward <span className="small"></span></div>
                     </Col>
                     <Col md="4" xs="12">
                       <div className="ypRight text-right">
@@ -310,7 +310,7 @@ function Stake() {
                         <div className="form-check">
                           <input className="form-check-input" type="checkbox" value={approvalCheck} checked={approvalCheck} onChange={handleCheckbox} id="flexCheckDefault" />
                           <label className="form-check-label" htmlFor="flexCheckDefault">
-                            <span className="small">Only 1 stake is possible per wallet. Staked Tokens will be locked for the full duration of the stake period. Unstaking will not be possible.</span>
+                            <span className="small">Only 1 stake is possible per wallet. Staked tokens will be locked for the full duration of the stake period.</span>
                           </label>
                         </div>
                       </div>
@@ -326,10 +326,10 @@ function Stake() {
                 <div className="ypBox__bottom text-center">
                 <div className="ypBox__bottom text-center">
                   {/* <a href="/process" className="btn btn-primary btn-mw300">STAKE</a> */}
-                  <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck || isApproved} onClick={() => onApproveAndStake()}>
+                  <button className="btn btn-primary btn-mw300 approve" style={{backgroundColor: `${isApproved ? "#9900FF" : ""}`}} disabled={!approvalCheck || isApproved} onClick={() => onApproveAndStake()}>
                     Approve
                   </button>
-                  <span className="div"/>
+                  <span className="div" style={{backgroundColor: `${isApproved ? "#9900FF" : ""}`}}/>
                   <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck || !isApproved} onClick={() => onApproveAndStake()}>
                     Stake
                   </button>

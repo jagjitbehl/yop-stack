@@ -4,9 +4,9 @@ import {
 } from 'reactstrap';
 import { useHistory, Link } from "react-router-dom";
 import noob from '../assets/images/nbIcon.PNG';
-import pro from '../assets/images/prIcon.PNG';
-import yopLandIcon from '../assets/images/yopLandIcon.png';
-import star from '../assets/images/star.png';
+import pro from '../assets/images/prIcon.png';
+import yopLandIcon from '../assets/Icons/yop-vault.svg';
+import star from '../assets/Icons/gold-star.svg';
 
 export function UnlockWallet({
 	onMetamaskConnect,
@@ -25,13 +25,13 @@ export function UnlockWallet({
           <Col md="7" xs="12">
             <div className="innerContent">
               <div className="ypHead mb-5">
-                <h2 className="text-primary"><img src={yopLandIcon} className="mr-2" />YOP Vault!</h2>
-                <p>YOP Vault is a custom built staking product allow simple and<br/>
+                <h2 className="text-primary"><img src={yopLandIcon} className="mr-2 icon-30" />YOP Vault!</h2>
+                <p>YOP Vault is a custom built staking product that allows simple and<br/>
                 easy yield generation with YOP tokens. Find out more <a className="text-primary text-underline" href="#">here.</a></p>
               </div>
               <div className="d-block mb-4">
-                <span className="ypTags ypTags--outline-primary text-uppercase">YOP Single Asset</span>
-                <span className="ypTags ypTags--outline-primary text-uppercase ml-3"><img src={star} alt="Start" className="mr-1" style={{ position: 'relative', top: '-3px'}} />YOP Single Asset</span>
+                <span className="ypTags ypTags--outline-primary">YOP Single Asset</span>
+                <span className="ypTags ypTags--outline-golden ml-3"><img src={star} alt="Start" className="mr-1 icon-12" style={{ position: 'relative', top: '-3px'}} />1 Million $YOP Reward</span>
               </div>
               <div className="btnWrap mb-md-0 mb-4">
                 <Row>
@@ -66,7 +66,7 @@ export function UnlockWallet({
                   <span className="ypTags">YOP / ETH LP</span>
                 </Col>
                 <Col md="6" xs="6" className="text-md-right text-center pb-md-0 pb-4">
-                  <span className="ypTags">YOP / COMP</span>
+                  <span className="ypTags">YOP / AAVE</span>
                 </Col>
                 <Col md="6" xs="6" className="text-md-left text-center pb-0">
                   <span className="ypTags">YOP / USDC LP</span>
