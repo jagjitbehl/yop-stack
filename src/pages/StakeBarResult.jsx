@@ -79,7 +79,7 @@ function StakeBarResult(props) {
                   <h3><img className="ypdIcon" src={Icon5} />Staking</h3>
                 </div>
                 <div className="ypHeadRight">
-                  <span className="text-muted label-medium">Available $YOP Balance <span className="pl-1 text-secondary">750,000.00</span></span>
+                  <span className="text-muted label-medium">Available $YOP Balance <span className="pl-1 text-secondary">1</span></span>
                 </div>
               </div>
               <div className="ypBox__content">
@@ -88,7 +88,7 @@ function StakeBarResult(props) {
                     <Col md="6" xs="12">
                       <div className="ypLeft d-flex align-items-center">
                         <img className="ypdIcon mr-2" src={Icon1} /> <span className="label-medium font-weight-medium">Stake Amount</span>
-                        <span className="label-medium font-weight-medium text-primary pl-3">1,234.12345678 </span>
+                        <span className="label-medium font-weight-medium text-primary pl-3">{getRoundFigure(formatDecimal(amount, 8))}</span>
                         <span className="label-medium font-weight-medium text-primary pl-3">$YOP</span>
                       </div>
                     </Col>
@@ -96,19 +96,19 @@ function StakeBarResult(props) {
                       <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
                         <img className="ypdIcon" src={Icon3} /> 
                         <span className="label-medium font-weight-medium pl-1">Rewards Earned (YTD)</span>
-                        <span className="label-medium font-weight-medium text-success mb-0 pl-3">+0.0235 $YOP</span>
+                        <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`+${getRoundFigure(formatDecimal(reward, 8))}`} $YOP</span>
                       </div>
                     </Col>
                   </Row>
                 </div>
                 <div className="ypBox__block">
                   <div className="progressWrap my-5">
-                    <span className="posLtop" style={{ left: '4%'}}><span className="text-success label-medium">+0.0235 $YOP</span><span className="d-block label-small font-weight-medium">4th February 2021</span></span>
+                    <span className="posLtop posLtop--end" style={{ right: '1%'}}><span className="text-success label-medium">Staking Complete</span><span className="d-block label-small font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span></span>
                     <div className="progress">
-                      <div className="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '5%'}}></div>
+                      <div className="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '100%'}}></div>
                     </div>
-                    <span className="posLbott"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary font-weight-medium">1st February 2021</span></span>
-                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">4th February 2021</span><span className="d-block text-primary  font-weight-medium">1st March 2021</span></span>
+                    <span className="posLbott"><span className="d-block label-small font-weight-medium">Staked On</span><span className="d-block text-primary font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span></span>
+                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">Claim Reward On</span><span className="d-block text-primary  font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">
