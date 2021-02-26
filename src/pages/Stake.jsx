@@ -329,7 +329,7 @@ function Stake() {
                   <button className="btn btn-primary btn-mw300 approve" style={{backgroundColor: `${isApproved ? "#9900FF" : ""}`}} disabled={!approvalCheck || isApproved} onClick={() => onApproveAndStake()}>
                     Approve
                   </button>
-                  <span className="div" style={{backgroundColor: `${isApproved ? "#9900FF" : ""}`}}/>
+                  <span className="div" style={{borderColor: `${isApproved ? "#9900FF" : ""}`}}/>
                   <button className="btn btn-primary btn-mw300 approve" disabled={!approvalCheck || !isApproved} onClick={() => onApproveAndStake()}>
                     Stake
                   </button>

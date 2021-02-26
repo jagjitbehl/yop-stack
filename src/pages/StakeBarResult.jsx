@@ -9,6 +9,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import Icon1 from '../assets/Icons/stake-amount.svg';
 import Icon3 from '../assets/Icons/reward.svg';
 import Icon5 from '../assets/Icons/stake-token.svg';
+import unlocked from '../assets/Icons/unlocked.svg';
 import IconLock from '../assets/images/lockIcon.png';
 import pLogo from '../assets/images/pLogo.png';
 import ypGraph from '../assets/images/ypGraph.jpg';
@@ -108,7 +109,7 @@ function StakeBarResult(props) {
                       <div className="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style={{ width: '100%'}}></div>
                     </div>
                     <span className="posLbott"><span className="d-block label-small font-weight-medium">Staked On</span><span className="d-block text-primary font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span></span>
-                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">Claim Reward On</span><span className="d-block text-primary  font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
+                    <span className="posRbott text-right"><span className="d-block label-small font-weight-medium">Claimed Reward On</span><span className="d-block text-primary  font-weight-medium"><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
                   </div>
                 </div>
                 <div className="ypBox__bottom text-center">
@@ -117,9 +118,9 @@ function StakeBarResult(props) {
               </div>
               <div className="ypBox--active d-flex justyfy-content-center align-items-center flex-wrap flex-column">
                 <div className="ypInnner flex-row">
-                  <img className="mb-5" src={IconLock} />
+                  <img className="mb-5 icon-86" src={unlocked} />
                   <h4 className="text-white font-weight-normal mb-4"><span><strong>{getRoundFigure(formatDecimal(amount, 8))}</strong> $YOP Unstaked</span><span className="px-4">|</span><span><strong>{getRoundFigure(formatDecimal(reward, 8))}</strong> $YOP Earned</span></h4>
-                  <span className="text-white font-weight-normal label-sub"><span><strong>Staked On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span><span className="px-4">|</span><span><strong>Claim Reward On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
+                  <span className="text-white font-weight-normal label-sub"><span><strong>Staked On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(startOfStake) }} /></span><span className="px-4">|</span><span><strong>Claimed Reward On: </strong><span dangerouslySetInnerHTML={{ __html: formatDate(endOfStake) }} /></span></span>
                 </div>
                 {txHash &&
                 <a href={`${getHashLink(networkId, txHash)}`} className="pb-5 text-white text-underline" rel="noreferrer" target="_blank"><u>View Transaction on Etherscan</u></a>

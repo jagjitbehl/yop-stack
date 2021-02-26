@@ -82,8 +82,9 @@ function StakeBarActive() {
       const interval = setInterval(() => {
         progressValue = progressValue + 1;
         const newProgress = Math.floor(((Date.now() - startOfStakeMillis) / (endOfStakeMillis - startOfStakeMillis)) * 100);
-        const rewardsEarned = newProgress <= 100 ? ((newProgress * reward) / 100) : reward;
-        setProgress(newProgress - 20);
+        const showSlowProgress = newProgress - 15;
+        const rewardsEarned = showSlowProgress <= 100 ? ((showSlowProgress * reward) / 100) : reward;
+        setProgress(showSlowProgress);
         setRewardsEarned(rewardsEarned);
         if (Date.now() >= endOfStakeMillis && newProgress > 120) {
           clearInterval(interval);
@@ -141,7 +142,7 @@ function StakeBarActive() {
                     <Col md="6" xs="12">
                       <div className="ypRight ypRight--icon d-flex align-items-center justify-content-md-end">
                         <img className="ypdIcon" src={Icon3} />
-                        <span className="label-medium font-weight-medium pl-1">Rewards Earned</span>
+                        <span className="label-medium font-weight-medium pl-1">Reward</span>
                         <span className="label-medium font-weight-medium text-success mb-0 pl-3">{`+${getRoundFigure(formatDecimal(reward, 8))}`} $YOP</span>
                       </div>
                     </Col>

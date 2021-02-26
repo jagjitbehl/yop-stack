@@ -92,8 +92,8 @@ export function RightSidebar({
 	          <LineChart
               data={data}
               margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-	            <XAxis dataKey="name" tick={false} stroke="#cccccc" />
-	            <Line type="monotone" dataKey="pv" stroke="#9900FF" dot={false} />
+	            <XAxis dataKey="name" tick={false} stroke="#cccccc" strokeWidth={2} />
+	            <Line type="monotone" dataKey="pv" stroke="#9900FF" strokeWidth={2} dot={false} />
 	          </LineChart>
 	        </ResponsiveContainer>
 	        </div>

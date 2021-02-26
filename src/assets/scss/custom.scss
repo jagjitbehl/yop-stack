@@ -55,6 +55,7 @@ h6{
 .label-small{
   @include font-size(0.63);
 }
+
 .font-weight-medium{
   font-weight: 500;
 }
@@ -96,6 +97,10 @@ img{
 
 .icon-12{
   width:12px;
+}
+
+.icon-86{
+  width:86px;
 }
 
 .inputIcon{
@@ -540,9 +545,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
 }
 
 .recharts-responsive-container {
-  height: 63px !important;
-  width: 145px !important;
+  height: 100% !important;
+  width: 100% !important;
   margin: auto;
+  max-width: 152px;
+  max-height: 67px;
 }
 
 .stake-active {
@@ -550,7 +557,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     height: 100% !important;
     width: 100% !important;
     margin: auto;
-    max-width: 127px;
+    max-width: 165px;
     max-height: 79px;
   }
 }
@@ -560,7 +567,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
     height: 100% !important;
     width: 100% !important;
     margin: auto;
-    max-width: 127px;
+    max-width: 165px;
     max-height: 80px;
   }
 }
@@ -596,7 +603,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c00b7', end
 }
 
 .div {
-  border-top: 1px solid $primary-color;
+  border-top: 2px solid $primary-color;
   display: inline-block;
   position: relative;
   width: 100px;

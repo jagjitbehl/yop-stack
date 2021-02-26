@@ -8,16 +8,16 @@
     @include font-size(0.68);
     cursor: pointer;
     &:before{
-      width: 18px;
-      height: 18px;
-      @include position(absolute, $top:0, $left:0);
-      border: 2px solid #333;
+      width: 15px;
+      height: 15px;
+      @include position(absolute, $top:0, $left:3px);
+      border: 1px solid #333;
       content: '';      
     }
     &:after{
-      width: 10px;
-      height: 10px;
-      @include position(absolute, $top:4px, $left:4px);
+      width: 9px;
+      height: 9px;
+      @include position(absolute, $top:3px, $left:6px);
       background-color: #333;
       content: '';
       opacity: 0;      
